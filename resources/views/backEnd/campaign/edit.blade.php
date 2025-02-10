@@ -7,7 +7,7 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -18,8 +18,8 @@
                 <h4 class="page-title">Landing Page Edit</h4>
             </div>
         </div>
-    </div>       
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
    <div class="row justify-content-center">
     <div class="col-lg-10">
         <div class="card">
@@ -31,7 +31,7 @@
                     <div class="col-sm-12">
                         <div class="form-group mb-3">
                             <label for="product_id" class="form-label">Products *</label>
-                             <select class="select2 form-control  @error('product_id') is-invalid @enderror" value="{{ old('product_id') }}" name="product_id" data-placeholder="Choose ...">
+                             <select class="select2 form-control  @error('product_id') is-invalid @enderror" value="{{ old('product_id') }}" name="product_id" required data-placeholder="Choose ...">
                                 <option value="">Select..</option>
                                 @foreach($products as $value)
                                 <option value="{{$value->id}}">{{$value->name}}</option>
@@ -60,7 +60,7 @@
                     </div>
                     <!-- col-end -->
 
-                    
+
                     <div class="col-sm-6 mb-3">
                         <div class="form-group">
                             <label for="banner" class="form-label">Banner Image *</label>

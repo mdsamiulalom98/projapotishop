@@ -7,7 +7,7 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -18,8 +18,8 @@
                 <h4 class="page-title">Category Create</h4>
             </div>
         </div>
-    </div>       
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
    <div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="card">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <!-- col-end -->
-                    
+
                     <div class="col-sm-12 mb-3">
                         <div class="form-group">
                             <label for="image" class="form-label">Image </label>
@@ -63,7 +63,7 @@
                             @enderror
                         </div>
                     </div>
-                   
+
                     <div class="col-sm-12">
                         <div class="form-group mb-3">
                             <label for="meta_description" class="form-label">Meta Description</label>
@@ -75,7 +75,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <!-- col-end -->
 
                     <div class="col mb-3">
@@ -108,7 +108,22 @@
                         </div>
                     </div>
                     <!-- col end -->
-                    
+                    <div class="col mb-3">
+                        <div class="form-group">
+                            <label for="top_category" class="d-block">Top Category</label>
+                            <label class="switch">
+                                <input type="checkbox" value="1" name="top_category" >
+                                <span class="slider round"></span>
+                            </label>
+                            @error('top_category')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <!-- col end -->
+
                     <div>
                         <input type="submit" class="btn btn-success" value="Submit">
                     </div>
