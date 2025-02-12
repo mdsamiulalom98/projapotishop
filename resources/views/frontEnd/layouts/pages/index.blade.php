@@ -36,6 +36,24 @@
     </section>
     <!-- slider end -->
 
+    <section class="news_feed">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="news_inner">
+                        <div class="news-item ">
+                            <marquee>
+                                @foreach ($news as $key => $value)
+                                    {!! $value->title !!}
+                                @endforeach
+                            </marquee>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="homeproduct">
         <div class="container">
             <div class="row">
@@ -208,8 +226,16 @@
                         items: 2,
                         nav: false,
                     },
+                    400: {
+                        items: 2,
+                        nav: false,
+                    },
                     600: {
-                        items: 5,
+                        items: 3,
+                        nav: false,
+                    },
+                    800: {
+                        items: 4,
                         nav: false,
                     },
                     1000: {
@@ -220,6 +246,13 @@
             });
         });
     </script>
+    @foreach ($product_campaign as $index => $deal)
+    <script>
+        $("#simple_timer{{$index + 1}}").syotimer({
+            date: new Date('{{$deal->date}}')
+        });
+    </script>
+    @endforeach
     <script>
         $("#simple_timer").syotimer({
             // date: new Date(2015, 0, 1),

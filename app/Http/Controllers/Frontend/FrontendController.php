@@ -6,23 +6,23 @@ use shurjopayv2\ShurjopayLaravelPackage8\Http\Controllers\ShurjopayController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Models\Category;
-use App\Models\Subcategory;
-use App\Models\Childcategory;
-use App\Models\Product;
-use App\Models\District;
-use App\Models\CreatePage;
-use App\Models\Campaign;
-use App\Models\Banner;
-use App\Models\ShippingCharge;
-use App\Models\Productcolor;
-use App\Models\Productsize;
-use App\Models\Customer;
-use App\Models\OrderDetails;
 use App\Models\ProductVariable;
-use App\Models\Order;
+use App\Models\ShippingCharge;
+use App\Models\Childcategory;
+use App\Models\OrderDetails;
+use App\Models\Subcategory;
+use App\Models\CampaignPro;
+use App\Models\CreatePage;
+use App\Models\Category;
+use App\Models\Customer;
+use App\Models\District;
+use App\Models\Campaign;
+use App\Models\Product;
 use App\Models\Review;
+use App\Models\Banner;
+use App\Models\Order;
 use App\Models\Brand;
+use App\Models\News;
 use Session;
 use Cart;
 use Auth;
@@ -52,7 +52,14 @@ class FrontendController extends Controller
             ->orderBy('id', 'ASC')
             ->get();
         $topcategories = Category::where(['top_category' => 1, 'status' => 1])->orderBy('updated_at', 'DESC')->get();
-        return view('frontEnd.layouts.pages.index', compact('sliders', 'frontcategory', 'hotdeal_top', 'homecategory', 'topcategories'));
+
+        $news = News::where(['status' => 1])
+            ->select('id', 'title')
+            ->get();
+
+        $product_campaign = CampaignPro::where('status', 1)->get();
+
+        return view('frontEnd.layouts.pages.index', compact('sliders', 'frontcategory', 'hotdeal_top', 'homecategory', 'topcategories', 'news', 'product_campaign'));
     }
 
     public function hotdeals(Request $request)

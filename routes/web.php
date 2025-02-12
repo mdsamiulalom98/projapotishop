@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\TagManagerController;
 use App\Http\Controllers\Admin\CouponCodeController;
 use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\ExpenseCategoriesController;
+use App\Http\Controllers\Admin\NewsController;
 
 Auth::routes();
 
@@ -47,8 +48,8 @@ Route::get('/cc', function () {
     return "Cleared!";
 });
 Route::get('/migrate', function () {
-    $exitCode = Artisan::call('migrate');
-    return '<h1>Make Model</h1>';
+    Artisan::call('migrate');
+    return redirect()->back();
 });
 
 Route::get('/controller', function () {
@@ -516,5 +517,16 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('coupon-code/inactive', [CouponCodeController::class, 'inactive'])->name('couponcodes.inactive');
     Route::post('coupon-code/active', [CouponCodeController::class, 'active'])->name('couponcodes.active');
     Route::post('coupon-code/destroy', [CouponCodeController::class, 'destroy'])->name('couponcodes.destroy');
+         // categories
+         Route::get('news/manage', [NewsController::class,'index'])->name('news.index');
+         Route::get('news/{id}/show', [NewsController::class,'show'])->name('news.show');
+         Route::get('news/create', [NewsController::class,'create'])->name('news.create');
+         Route::post('news/save', [NewsController::class,'store'])->name('news.store');
+         Route::get('news/{id}/edit', [NewsController::class,'edit'])->name('news.edit');
+         Route::post('news/update', [NewsController::class,'update'])->name('news.update');
+         Route::post('news/inactive', [NewsController::class,'inactive'])->name('news.inactive');
+         Route::post('news/active', [NewsController::class,'active'])->name('news.active');
+         Route::post('news/destroy', [NewsController::class,'destroy'])->name('news.destroy');
+
 
 });

@@ -48,9 +48,11 @@
 
 @if ($value->variable_count > 0 && $value->type == 0)
     <div class="pro_btn">
-
         <div class="cart_btn order_button">
-            <a href="{{ route('product', $value->slug) }}" class="addcartbutton">অর্ডার করুন </a>
+            <a href="{{ route('product', $value->slug) }}" class="addcartbutton">
+                <i class="fa fa-shopping-basket"></i>
+                অর্ডার করুন
+            </a>
         </div>
     </div>
 @else
@@ -61,7 +63,10 @@
             <input type="hidden" name="id" value="{{ $value->id }}" />
             <input type="hidden" name="qty" value="1" />
             <input type="hidden" name="order_now" value="অর্ডার করুন" />
-            <button type="submit">অর্ডার করুন</button>
+            <button type="submit">
+                <i class="fa fa-shopping-basket"></i>
+                অর্ডার করুন
+            </button>
         </form>
     </div>
 @endif
