@@ -6,7 +6,7 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -17,15 +17,15 @@
                 <h4 class="page-title">Campaign Create</h4>
             </div>
         </div>
-    </div>       
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
    <div class="row justify-content-center">
     <div class="col-lg-10">
         <div class="card">
             <div class="card-body">
                 <form action="{{route('proCampaign.store')}}" method="POST" class=row data-parsley-validate=""  enctype="multipart/form-data">
                     @csrf
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group mb-3">
                             <label for="name" class="form-label">Name *</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}"  id="name" required="">
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <!-- col-end -->
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group mb-3">
                             <label for="titlecolor" class="form-label">Title Color *</label>
                             <input type="text" class="form-control @error('titlecolor') is-invalid @enderror" name="titlecolor" value="{{ old('titlecolor') }}"  id="titlecolor" required="">
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <!-- col-end -->
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group mb-3">
                             <label for="bgcolor" class="form-label">Background Color *</label>
                             <input type="text" class="form-control @error('bgcolor') is-invalid @enderror" name="bgcolor" value="{{ old('bgcolor') }}"  id="bgcolor" required="">

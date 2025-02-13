@@ -13,21 +13,27 @@ class BannerController extends Controller
 {
     function __construct()
     {
-         $this->middleware('permission:banner-list|banner-create|banner-edit|banner-delete', ['only' => ['index','store']]);
-         $this->middleware('permission:banner-create', ['only' => ['create','store']]);
-         $this->middleware('permission:banner-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:banner-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:banner-list|banner-create|banner-edit|banner-delete', ['only' => ['index', 'store']]);
+        $this->middleware('permission:banner-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:banner-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:banner-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
-        $data = Banner::orderBy('id','DESC')->with('category')->get();
-        return view('backEnd.banner.index',compact('data'));
+        $data = Banner::orderBy('id', 'DESC')->with('category')->get();
+        return view('backEnd.banner.index', compact('data'));
+    }
+
+    public function sort(Request $request)
+    {
+        $data = Banner::orderBy('sort', 'ASC')->get();
+        return view('backEnd.banner.sort', compact('data'));
     }
     public function create()
     {
-        $categories = BannerCategory::orderBy('id','DESC')->select('id','name')->get();
-        return view('backEnd.banner.create',compact('categories'));
+        $categories = BannerCategory::orderBy('id', 'DESC')->select('id', 'name')->get();
+        return view('backEnd.banner.create', compact('categories'));
     }
     public function store(Request $request)
     {
@@ -35,29 +41,29 @@ class BannerController extends Controller
             'link' => 'required',
             'status' => 'required',
         ]);
-        
-        // image with intervention 
+
+        // image with intervention
         $file = $request->file('image');
-        $name = time().$file->getClientOriginalName();
+        $name = time() . $file->getClientOriginalName();
         $uploadPath = 'public/uploads/banner/';
-        $file->move($uploadPath,$name);
-        $fileUrl =$uploadPath.$name;
+        $file->move($uploadPath, $name);
+        $fileUrl = $uploadPath . $name;
 
         $input = $request->all();
-        $input['status'] = $request->status?1:0;
+        $input['status'] = $request->status ? 1 : 0;
         $input['image'] = $fileUrl;
         Banner::create($input);
-        Toastr::success('Success','Data insert successfully');
+        Toastr::success('Success', 'Data insert successfully');
         return redirect()->route('banners.index');
     }
-    
+
     public function edit($id)
     {
         $edit_data = Banner::find($id);
-        $categories = BannerCategory::select('id','name')->get();
-        return view('backEnd.banner.edit',compact('edit_data','categories'));
+        $categories = BannerCategory::select('id', 'name')->get();
+        return view('backEnd.banner.edit', compact('edit_data', 'categories'));
     }
-    
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -66,32 +72,32 @@ class BannerController extends Controller
         $update_data = Banner::find($request->id);
         $input = $request->all();
         $image = $request->file('image');
-        if($image){
-           // image with intervention 
+        if ($image) {
+            // image with intervention
             $file = $request->file('image');
-            $name = time().$file->getClientOriginalName();
+            $name = time() . $file->getClientOriginalName();
             $uploadPath = 'public/uploads/banner/';
-            $file->move($uploadPath,$name);
-            $fileUrl =$uploadPath.$name;
+            $file->move($uploadPath, $name);
+            $fileUrl = $uploadPath . $name;
             $input['image'] = $fileUrl;
             File::delete($update_data->image);
-        }else{
+        } else {
             $input['image'] = $update_data->image;
         }
 
-        $input['status'] = $request->status?1:0;
+        $input['status'] = $request->status ? 1 : 0;
         $update_data->update($input);
 
-        Toastr::success('Success','Data update successfully');
+        Toastr::success('Success', 'Data update successfully');
         return redirect()->route('banners.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = Banner::find($request->hidden_id);
         $inactive->status = 0;
         $inactive->save();
-        Toastr::success('Success','Data inactive successfully');
+        Toastr::success('Success', 'Data inactive successfully');
         return redirect()->back();
     }
     public function active(Request $request)
@@ -99,14 +105,25 @@ class BannerController extends Controller
         $active = Banner::find($request->hidden_id);
         $active->status = 1;
         $active->save();
-        Toastr::success('Success','Data active successfully');
+        Toastr::success('Success', 'Data active successfully');
         return redirect()->back();
     }
     public function destroy(Request $request)
     {
         $delete_data = Banner::find($request->hidden_id);
         $delete_data->delete();
-        Toastr::success('Success','Data delete successfully');
+        Toastr::success('Success', 'Data delete successfully');
         return redirect()->back();
+    }
+
+    public function update_order(Request $request)
+    {
+        $order = $request->input('order');
+
+        foreach ($order as $sortOrder => $id) {
+            Banner::where('id', $id)->update(['sort' => $sortOrder + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }

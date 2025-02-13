@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CampaignPro extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 }

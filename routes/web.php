@@ -37,6 +37,7 @@ use App\Http\Controllers\Admin\CouponCodeController;
 use App\Http\Controllers\Admin\ExpenseController;
 use App\Http\Controllers\Admin\ExpenseCategoriesController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\CampaignProController;
 
 Auth::routes();
 
@@ -209,6 +210,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
 
     // categories
     Route::get('categories/manage', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('categories/sort', [CategoryController::class,'sort'])->name('categories.sort');
     Route::get('categories/{id}/show', [CategoryController::class, 'show'])->name('categories.show');
     Route::get('categories/create', [CategoryController::class, 'create'])->name('categories.create');
     Route::post('categories/save', [CategoryController::class, 'store'])->name('categories.store');
@@ -217,6 +219,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('categories/inactive', [CategoryController::class, 'inactive'])->name('categories.inactive');
     Route::post('categories/active', [CategoryController::class, 'active'])->name('categories.active');
     Route::post('categories/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::post('categories/update-order', [CategoryController::class,'update_order'])->name('categories.orderupdate');
 
     // Subcategories
     Route::get('subcategories/manage', [SubcategoryController::class, 'index'])->name('subcategories.index');
@@ -391,6 +394,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
 
     // banner  route
     Route::get('banner/manage', [BannerController::class, 'index'])->name('banners.index');
+    Route::get('banner/sort', [BannerController::class,'sort'])->name('banners.sort');
     Route::get('banner/create', [BannerController::class, 'create'])->name('banners.create');
     Route::post('banner/save', [BannerController::class, 'store'])->name('banners.store');
     Route::get('banner/{id}/edit', [BannerController::class, 'edit'])->name('banners.edit');
@@ -398,6 +402,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('banner/inactive', [BannerController::class, 'inactive'])->name('banners.inactive');
     Route::post('banner/active', [BannerController::class, 'active'])->name('banners.active');
     Route::post('banner/destroy', [BannerController::class, 'destroy'])->name('banners.destroy');
+    Route::post('banner/update-order', [BannerController::class,'update_order'])->name('banners.orderupdate');
 
     // contact route
     Route::get('page/manage', [CreatePageController::class, 'index'])->name('pages.index');
@@ -517,16 +522,28 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('coupon-code/inactive', [CouponCodeController::class, 'inactive'])->name('couponcodes.inactive');
     Route::post('coupon-code/active', [CouponCodeController::class, 'active'])->name('couponcodes.active');
     Route::post('coupon-code/destroy', [CouponCodeController::class, 'destroy'])->name('couponcodes.destroy');
-         // categories
-         Route::get('news/manage', [NewsController::class,'index'])->name('news.index');
-         Route::get('news/{id}/show', [NewsController::class,'show'])->name('news.show');
-         Route::get('news/create', [NewsController::class,'create'])->name('news.create');
-         Route::post('news/save', [NewsController::class,'store'])->name('news.store');
-         Route::get('news/{id}/edit', [NewsController::class,'edit'])->name('news.edit');
-         Route::post('news/update', [NewsController::class,'update'])->name('news.update');
-         Route::post('news/inactive', [NewsController::class,'inactive'])->name('news.inactive');
-         Route::post('news/active', [NewsController::class,'active'])->name('news.active');
-         Route::post('news/destroy', [NewsController::class,'destroy'])->name('news.destroy');
+    // categories
+    Route::get('news/manage', [NewsController::class, 'index'])->name('news.index');
+    Route::get('news/{id}/show', [NewsController::class, 'show'])->name('news.show');
+    Route::get('news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('news/save', [NewsController::class, 'store'])->name('news.store');
+    Route::get('news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
+    Route::post('news/update', [NewsController::class, 'update'])->name('news.update');
+    Route::post('news/inactive', [NewsController::class, 'inactive'])->name('news.inactive');
+    Route::post('news/active', [NewsController::class, 'active'])->name('news.active');
+    Route::post('news/destroy', [NewsController::class, 'destroy'])->name('news.destroy');
+
+     // pro campaign
+     Route::get('pro-campaign/manage', [CampaignProController::class,'index'])->name('proCampaign.index');
+     Route::get('pro-campaign/{id}/show', [CampaignProController::class,'show'])->name('proCampaign.show');
+     Route::get('pro-campaign/create', [CampaignProController::class,'create'])->name('proCampaign.create');
+     Route::post('pro-campaign/save', [CampaignProController::class,'store'])->name('proCampaign.store');
+     Route::get('pro-campaign/{id}/edit', [CampaignProController::class,'edit'])->name('proCampaign.edit');
+     Route::post('pro-campaign/update', [CampaignProController::class,'update'])->name('proCampaign.update');
+     Route::post('pro-campaign/inactive', [CampaignProController::class,'inactive'])->name('proCampaign.inactive');
+     Route::post('pro-campaign/active', [CampaignProController::class,'active'])->name('proCampaign.active');
+     Route::post('pro-campaign/destroy', [CampaignProController::class,'destroy'])->name('proCampaign.destroy');
+
 
 
 });

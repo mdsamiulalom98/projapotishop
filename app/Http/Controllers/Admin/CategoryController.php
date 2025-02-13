@@ -25,6 +25,12 @@ class CategoryController extends Controller
         // return $data;
         return view('backEnd.category.index', compact('data'));
     }
+
+    public function sort(Request $request)
+    {
+        $data = Category::orderBy('sort','ASC')->get();
+        return view('backEnd.category.sort',compact('data'));
+    }
     public function create()
     {
         $categories = Category::orderBy('id', 'DESC')->select('id', 'name')->get();
@@ -148,5 +154,16 @@ class CategoryController extends Controller
         }
         Toastr::success('Success', 'Data delete successfully');
         return redirect()->back();
+    }
+
+    public function update_order(Request $request)
+    {
+        $order = $request->input('order');
+
+        foreach ($order as $sortOrder => $id) {
+            Category::where('id', $id)->update(['sort' => $sortOrder + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }
