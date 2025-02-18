@@ -83,6 +83,8 @@
                                             @foreach ($details->images as $value)
                                                 <div class="dimage_item">
                                                     <img src="{{ asset($value->image) }}" class="block__pic" />
+                                                    <a href="{{ asset($value->image) }}" download class="download-btn"><i
+                                                            class="fa-solid fa-download"></i></a>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -272,12 +274,20 @@
                                                                 </h4>
                                                             </div>
                                                             <div class="mt-md-2 mt-2">
+                                                                <h4 class="font-weight-bold">
+                                                                    <a class="btn btn-success w-100 whatsapp_btn"
+                                                                        href="{{ $contact->whatsapp }}">
+                                                                        <i class="fa-brands fa-whatsapp"></i>
+                                                                        Whatsapp
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                            <div class="mt-md-2 mt-2">
                                                                 <div class="del_charge_area">
                                                                     <div class="alert alert-info text-xs">
                                                                         <div class="flext_area">
                                                                             <i class="fa-solid fa-cubes"></i>
                                                                             <div>
-
                                                                                 @foreach ($shippingcharge as $key => $value)
                                                                                     <span>{{ $value->name }} <br /></span>
                                                                                 @endforeach
@@ -289,8 +299,6 @@
                                                         </div>
                                                     </div>
                                                 </form>
-
-
                                             </div>
                                         </div>
                                     </div>

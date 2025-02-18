@@ -9,6 +9,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Models\ProductVariable;
 use App\Models\ShippingCharge;
 use App\Models\Childcategory;
+use App\Models\VideoGallery;
 use App\Models\OrderDetails;
 use App\Models\Subcategory;
 use App\Models\CampaignPro;
@@ -33,11 +34,13 @@ class FrontendController extends Controller
     public function index()
     {
         $frontcategory = Category::where(['status' => 1])
+            ->orderBy('sort', 'ASC')
             ->select('id', 'name', 'image', 'slug', 'status')
             ->get();
 
         $sliders = Banner::where(['status' => 1, 'category_id' => 1])
             ->select('id', 'image', 'link')
+            ->orderBy('sort', 'ASC')
             ->get();
 
         $hotdeal_top = Product::where(['status' => 1, 'topsale' => 1])
@@ -49,15 +52,16 @@ class FrontendController extends Controller
         // return $hotdeal_top;
 
         $homecategory = Category::where(['front_view' => 1, 'status' => 1])
-            ->orderBy('id', 'ASC')
+            ->orderBy('sort', 'ASC')
             ->get();
-        $topcategories = Category::where(['top_category' => 1, 'status' => 1])->orderBy('updated_at', 'DESC')->get();
+        $topcategories = Category::where(['top_category' => 1, 'status' => 1])->orderBy('sort', 'ASC')->get();
 
         $news = News::where(['status' => 1])
             ->select('id', 'title')
             ->get();
 
-        $product_campaign = CampaignPro::where('status', 1)->get();
+        $product_campaign = CampaignPro::where('status', 1)->with('products')->get();
+        // return $product_campaign;
 
         return view('frontEnd.layouts.pages.index', compact('sliders', 'frontcategory', 'hotdeal_top', 'homecategory', 'topcategories', 'news', 'product_campaign'));
     }
@@ -121,12 +125,30 @@ class FrontendController extends Controller
             $products = $products->latest();
         }
 
-        $min_price = $products->min('new_price');
-        $max_price = $products->max('new_price');
+        $min_price = $products->pluck('new_price')->merge(
+            \DB::table('product_variables')->whereIn('product_id', $products->pluck('id'))->pluck('new_price')
+        )->min();
+
+        $max_price = $products->pluck('new_price')->merge(
+            \DB::table('product_variables')->whereIn('product_id', $products->pluck('id'))->pluck('new_price')
+        )->max();
+
+        // Apply filter if min_price & max_price exist in request
         if ($request->min_price && $request->max_price) {
-            $products = $products->where('new_price', '>=', $request->min_price);
-            $products = $products->where('new_price', '<=', $request->max_price);
+            $products = $products->with('variables')->where(function ($query) use ($request) {
+                if ($request->min_price && $request->max_price) {
+                    $query->where(function ($q) use ($request) {
+                        $q->where('new_price', '>=', $request->min_price)
+                          ->where('new_price', '<=', $request->max_price);
+                    })->orWhereHas('variables', function ($q) use ($request) {
+                        $q->where('new_price', '>=', $request->min_price)
+                          ->where('new_price', '<=', $request->max_price);
+                    });
+                }
+            });
+
         }
+
         $selectedSubcategories = $request->input('subcategory', []);
         // return $selectedSubcategories;
         $products = $products->when($selectedSubcategories, function ($query) use ($selectedSubcategories) {
@@ -376,6 +398,11 @@ class FrontendController extends Controller
     {
         $page = CreatePage::where('slug', $slug)->firstOrFail();
         return view('frontEnd.layouts.pages.page', compact('page'));
+    }
+    public function videogallery()
+    {
+        $videogalleries = VideoGallery::where('status', 1)->get();
+        return view('frontEnd.layouts.pages.videogallery', compact('videogalleries'));
     }
     public function districts(Request $request)
     {

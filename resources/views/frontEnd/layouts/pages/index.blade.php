@@ -87,41 +87,43 @@
                         @endforeach
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <section class="homeproduct">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="sec_title">
-                        <h3 class="section-title-header">
-                            <div class="timer_inner">
-                                <div class="">
-                                    <span class="section-title-name"> Hot Deal </span>
-                                </div>
+    @foreach ($product_campaign as $key => $campaign)
+        <section class="homeproduct">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sec_title">
+                            <h3 class="section-title-header">
+                                <div class="timer_inner">
+                                    <div class="">
+                                        <span class="section-title-name"> {{ $campaign->name }} </span>
+                                    </div>
 
-                                <div class="">
-                                    <div class="offer_timer" id="simple_timer"></div>
+                                    <div class="">
+                                        <div class="offer_timer" id="simple_timer{{ $key + 1 }}"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </h3>
+                            </h3>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="product_slider owl-carousel">
-                        @foreach ($hotdeal_top as $key => $value)
-                            <div class="product_item wist_item">
-                                @include('frontEnd.layouts.partials.product')
-                            </div>
-                        @endforeach
+
+                    <div class="col-sm-12">
+                        <div class="product_slider owl-carousel">
+                            @foreach ($campaign->products as $key => $value)
+                                <div class="product_item wist_item">
+                                    @include('frontEnd.layouts.partials.product')
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endforeach
 
     @foreach ($homecategory as $homecat)
         <section class="homeproduct">
@@ -247,21 +249,11 @@
         });
     </script>
     @foreach ($product_campaign as $index => $deal)
-    <script>
-        $("#simple_timer{{$index + 1}}").syotimer({
-            date: new Date('{{$deal->date}}')
-        });
-    </script>
+        <script>
+            $("#simple_timer{{ $index + 1 }}").syotimer({
+                date: new Date('{{ $deal->date }}')
+            });
+        </script>
     @endforeach
-    <script>
-        $("#simple_timer").syotimer({
-            // date: new Date(2015, 0, 1),
-            layout: "hms",
-            doubleNumbers: false,
-            effectType: "opacity",
-            periodUnit: "d",
-            periodic: true,
-            periodInterval: 1,
-        });
-    </script>
+
 @endpush

@@ -786,6 +786,11 @@ li.Newsletter i {
     margin-right: 3px;
 }
 
+.catagory_menu ul li {
+    height: 100%;
+
+}
+
 .catagory_menu ul li a {
     color: #000;
     margin: 0 8px;
@@ -797,12 +802,70 @@ li.Newsletter i {
     padding-left: 15px;
 }
 
+.catagory_menu ul li a.toggle {
+    display: block;
+    width: 180px;
+    background: #ffffff;
+    border-radius: 50px;
+    padding: 3px;
+}
+
+.catagory_menu ul li a.toggle .category-toggle-wrapper {
+    display: flex;
+    width: 100px;
+    align-items: center;
+    height: 40px;
+}
+
+.catagory_menu ul li a.toggle .category-toggle-wrapper .toggle-round {
+    height: 36px;
+    width: 36px;
+    background: blue;
+    flex: 0 0 36px;
+    position: relative;
+    border-radius: 36px;
+}
+
+.catagory_menu ul li a.toggle .category-toggle-wrapper .toggle-round span {
+    background-color: #fff;
+    width: 20px;
+    height: 2px;
+    left: 8px;
+}
+
+.catagory_menu ul li a.toggle .category-toggle-wrapper .toggle-round span::after,
+.catagory_menu ul li a.toggle .category-toggle-wrapper .toggle-round span::before {
+    background-color: #fff;
+    height: 2px;
+}
+
+.catagory_menu ul li a.toggle .category-toggle-wrapper .toggle-round span::before {
+    top: -7px;
+}
+
+.catagory_menu ul li a.toggle .category-toggle-wrapper .toggle-round span::after {
+    bottom: -7px;
+}
+
+.catagory_menu ul li a.toggle .category-toggle-wrapper strong {
+    display: block;
+    white-space: nowrap;
+    width: 100px;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
 .catagory_menu ul li a:hover {
     color: #7600e3;
 }
 
 .catagory_menu {
     padding: 0px;
+    display: flex;
+    align-items: center;
+}
+
+.catagory_menu ul {
     display: flex;
     align-items: center;
 }
@@ -1498,6 +1561,11 @@ li.con_title a {
     border-color: #ce0000 !important;
 }
 
+.whatsapp_btn {
+    background: #25D366 !important;
+    border-color: #25D366 !important;
+}
+
 .pro_brand.stock {
     margin-top: 20px;
 }
@@ -1522,6 +1590,10 @@ li.con_title a {
     color: #fff !important;
     background-color: #7600E3 !important;
     border-color: #7600E3 !important;
+}
+
+.dimage_item {
+    position: relative;
 }
 
 .features {
@@ -4855,4 +4927,15 @@ ul.social_link li:last-child {
         overflow: hidden;
 
     }
+}
+
+
+.gallery-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.gallery-item iframe {
+    width: 100%;
 }

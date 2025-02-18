@@ -64,7 +64,7 @@
                                             <input type="address" id="address"
                                                 class="form-control @error('address') is-invalid @enderror"
                                                 name="address" value="{{ old('address') }}" required />
-                                            @error('email')
+                                            @error('address')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -99,7 +99,7 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                @error('email')
+                                                @error('area')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -122,23 +122,22 @@
                                             @if (Session::get('free_shipping') != 1)
                                                 <div class="form-check p_cash">
                                                     <input class="form-check-input" type="radio" name="payment_method"
-                                                        id="inlineRadio1" value="Cash On Delivery" checked required />
-                                                    <label class="form-check-label" for="inlineRadio1">
+                                                        id="cod" value="Cash On Delivery" checked required />
+                                                    <label class="form-check-label" for="cod">
                                                         Cash On Delivery
                                                     </label>
                                                 </div>
                                             @endif
                                             @if ($bkash_gateway)
-                                                <div class="form-check p_bkash">
-                                                    <input class="form-check-input" type="radio"
-                                                        @if (Session::get('free_shipping') == 1) checked @endif
-                                                        name="payment_method" id="inlineRadio2" value="bkash"
-                                                        required />
-                                                    <label class="form-check-label" for="inlineRadio2">
-                                                        Bkash
-                                                    </label>
-                                                </div>
                                             @endif
+                                            <div class="form-check p_bkash">
+                                                <input class="form-check-input" type="radio"
+                                                    @if (Session::get('free_shipping') == 1) checked @endif
+                                                    name="payment_method" id="bKash" value="bkash" required />
+                                                <label class="form-check-label" for="bKash">
+                                                    Bkash
+                                                </label>
+                                            </div>
 
                                             @if ($shurjopay_gateway)
                                                 <div class="form-check p_shurjo">
@@ -149,6 +148,77 @@
                                                     </label>
                                                 </div>
                                             @endif
+                                        </div>
+
+                                        <div class="payment-instruction">
+
+                                            <div class="codform" style="display: block;">
+
+                                            </div>
+
+                                            <div class="bkashform" style="display: none;">
+                                                <p>বিকাশে টাকা সেন্ড করতে নিচের স্টেপ সমূহ ফলো করুন:</p>
+                                                <p>১. ডায়াল মেনু থেকে *247# ডায়াল করুন, অথবা বিকাশ অ্যাপে যান।</p>
+                                                <p>২. "Send Money" -তে ক্লিক করুন।</p>
+                                                <p>৩. প্রাপক নম্বর হিসেবে এই নম্বরটি লিখুন: 01812151867 </p>
+                                                <p>৪. টাকার পরিমান লিখুন (অতিরিক্ত কোনো চার্জ প্রয়োজন নেই)।</p>
+                                                <p>৫. রেফারেন্স হিসেবে 1234 দিবেন।</p>
+                                                <p>৬. নিশ্চিত করতে আপনার BKASH পিন লিখুন।</p>
+                                                <p>৭. নিচের বক্সে আপনার Transaction ID এবং যে নাম্বার থেকে টাকা
+                                                    পাঠিয়েছেন সেটি দিন।</p>
+                                                <p>৮. "ORDER PLACE" বাটনে ক্লিক করুন।</p>
+
+                                            </div>
+
+                                            <div class="nagadform" style="display: none;">
+                                                <p>নগদে টাকা পাঠাতে করতে নিচের স্টেপ সমূহ ফলো করুন:</p>
+                                                <p>১. ডায়াল মেনু থেকে *167# ডায়াল করুন, অথবা নগদ অ্যাপে যান।</p>
+                                                <p>২. "Send Money" -তে ক্লিক করুন।</p>
+                                                <p>৩. প্রাপক নম্বর হিসেবে এই নম্বরটি লিখুন: 01812151867 </p>
+                                                <p>৪. টাকার পরিমান লিখুন (অতিরিক্ত কোনো চার্জ প্রয়োজন নেই)।</p>
+                                                <p>৫. রেফারেন্স হিসেবে 1234 দিবেন।</p>
+                                                <p>৬. নিশ্চিত করতে আপনার NAGAD পিন লিখুন।</p>
+                                                <p>৭. নিচের বক্সে আপনার Transaction ID এবং যে নাম্বার থেকে টাকা
+                                                    পাঠিয়েছেন সেটি দিন।</p>
+                                                <p>৮. "ORDER PLACE" বাটনে ক্লিক করুন।</p>
+
+                                            </div>
+                                            <div class="rocketform" style="display: none;">
+                                                <p>রকেটে টাকা পাঠাতে নিচের স্টেপ সমূহ ফলো করুন:</p>
+                                                <p>১. ডায়াল মেনু থেকে *322# ডায়াল করুন, অথবা রকেট অ্যাপে যান।</p>
+                                                <p>২. "Send Money" -তে ক্লিক করুন।</p>
+                                                <p>৩. প্রাপক নম্বর হিসেবে এই নম্বরটি লিখুন: 01812151867 </p>
+                                                <p>৪. টাকার পরিমান লিখুন (অতিরিক্ত কোনো চার্জ প্রয়োজন নেই)।</p>
+                                                <p>৫. রেফারেন্স হিসেবে 1234 দিবেন।</p>
+                                                <p>৬. নিশ্চিত করতে আপনার ROCKET পিন লিখুন।</p>
+                                                <p>৭. নিচের বক্সে আপনার Transaction ID এবং যে নাম্বার থেকে টাকা
+                                                    পাঠিয়েছেন সেটি দিন।</p>
+                                                <p>৮. "ORDER PLACE" বাটনে ক্লিক করুন।</p>
+                                            </div>
+
+                                            <div class="trxform row" style="display: none;">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group mb-3">
+                                                        <label for="sender_number">Sender Number</label>
+                                                        <i data-feather="link"></i>
+                                                        <input type="text" id="sender_number"
+                                                            class="form-control" name="sender_number"
+                                                            value="">
+                                                    </div>
+                                                </div>
+                                                <!-- col-end -->
+                                                <div class="col-sm-6">
+                                                    <div class="form-group mb-3">
+                                                        <label for="trx_id">Transaction ID</label>
+                                                        <i data-feather="key"></i>
+                                                        <input type="text" id="trx_id" class="form-control "
+                                                            name="trx_id" value="">
+                                                    </div>
+                                                </div>
+                                                <!-- col-end -->
+
+                                            </div>
+
                                         </div>
                                     </div>
                                     @if ($sms_gateway)
@@ -307,6 +377,24 @@
 <script>
     $(document).ready(function() {
         $(".select2").select2();
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#bKash').on('input focus', function() {
+            $('.bkashform').show();
+            $('.trxform').show();
+            $('#sender_number').attr('required', true);
+            $('#trx_id').attr('required', true);
+        });
+
+        $('#cod').on('input focus', function() {
+            $('.bkashform').hide();
+            $('.trxform').hide();
+            $('#sender_number').removeAttr('required');
+            $('#trx_id').removeAttr('required');
+        });
+
     });
 </script>
 <script>

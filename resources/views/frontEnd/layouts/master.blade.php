@@ -11,7 +11,7 @@
         <link rel="shortcut icon" href="{{asset($generalsetting->favicon)}}" alt="{{$generalsetting->name}}" />
         <meta name="author" content="{{$generalsetting->name}}" />
         <link rel="canonical" href="{{route('home')}}" />
-        @stack('seo') 
+        @stack('seo')
         @stack('css')
         <link rel="stylesheet" href="{{asset('public/frontEnd/css/bootstrap.min.css')}}" />
         <link rel="stylesheet" href="{{asset('public/frontEnd/css/animate.css')}}" />
@@ -25,12 +25,12 @@
         <link rel="stylesheet" href="{{asset('public/backEnd/')}}/assets/css/toastr.min.css" />
 
         <link rel="stylesheet" href="{{asset('public/frontEnd/css/wsit-menu.css')}}" />
-        <link rel="stylesheet" href="{{asset('public/frontEnd/css/style.css?v=2.0.9')}}" />
-        <link rel="stylesheet" href="{{asset('public/frontEnd/css/responsive.css?v=2.0.9')}}" />
+        <link rel="stylesheet" href="{{asset('public/frontEnd/css/style.css?v=2.0.10')}}" />
+        <link rel="stylesheet" href="{{asset('public/frontEnd/css/responsive.css?v=2.0.10')}}" />
         <link rel="stylesheet" href="{{asset('public/frontEnd/css/main.css')}}" />
 
         <!-- sc -->
-         
+
         <!-- Google Tag Manager -->
             <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -44,17 +44,17 @@
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-            
+
               gtag('config', 'G-EHHESR0YN5');
             </script>
-                    
+
                     <!-- Google tag (gtag.js) -->
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-EHHESR0YN5"></script>
             <script>
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-            
+
               gtag('config', 'G-EHHESR0YN5');
             </script>
         <!-- sc -->
@@ -75,7 +75,7 @@
         src="https://www.facebook.com/tr?id=376270471730093&ev=PageView&noscript=1"
         /></noscript>
         <!-- End Meta Pixel Code -->
-        
+
         @foreach($gtm_code as $gtm)
         <!-- Google tag (gtag.js) -->
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -85,7 +85,7 @@
         })(window,document,'script','dataLayer','GTM-{{ $gtm->code }}');</script>
         <!-- End Google Tag Manager -->
         @endforeach
-        
+
         <style>
             .desc-nav-ul li a.active {
             background-color:#0a3a66;
@@ -94,8 +94,8 @@
         </style>
     </head>
     <body class="gotop">
-        @php 
-        $subtotal = Cart::instance('shopping')->subtotal(); 
+        @php
+        $subtotal = Cart::instance('shopping')->subtotal();
         @endphp
         <div class="mobile-menu">
                 <div class="mobile-menu-logo">
@@ -207,9 +207,20 @@
                             <div class="col-sm-12 d-flex justify-content-between">
                                 <div class="catagory_menu">
                                     <ul>
+                                        <li>
+                                            <a class="toggle">
+                                                <div class="category-toggle-wrapper">
+                                                    <div class="toggle-round">
+                                                        <span> </span>
+                                                    </div>
+                                                    <strong>All Categories</strong>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        {{--
                                         @foreach ($menucategories as $scategory)
                                         <li class="cat_bar ">
-                                            <a href="{{ url('category/' . $scategory->slug) }}"> 
+                                            <a href="{{ url('category/' . $scategory->slug) }}">
                                                 <span class="cat_head">{{ $scategory->name }}</span>
                                                 @if ($scategory->subcategories->count() > 0)
                                                 <i class="fa-solid fa-angle-down cat_down"></i>
@@ -228,7 +239,7 @@
                                                         @foreach($subcat->childcategories as $childcat)
                                                         <li class="child_main">
                                                             <a href="{{ url('products/'.$childcat->slug) }}">{{ $childcat->childcategoryName }}</a>
-                                                            
+
                                                         </li>
                                                         @endforeach
                                                     </ul>
@@ -239,9 +250,15 @@
                                             @endif
                                         </li>
                                         @endforeach
+                                        --}}
+                                        <li>
+                                            <a href="{{ route('videogallery') }}" class="">
+                                                Video Gallery
+                                            </a>
+                                        </li>
                                     </ul>
-                                    
-                                    
+
+
                                 </div>
                                 <div class="header-action-menu">
                                     <div class="action-item">
@@ -249,7 +266,7 @@
                                             <img class="track-image" src="{{ asset('public/frontEnd/images/truck-icon.png') }}">
                                         </a>
                                     </div>
-                                    
+
                                     @if(Auth::guard('customer')->user())
                                     <div class="action-item">
                                         <a href="{{route('customer.account')}}" title="{{Str::limit(Auth::guard('customer')->user()->name,14)}}">
@@ -286,7 +303,7 @@
                                             <a href="{{route('customer.checkout')}}" class="go_cart"> অর্ডার করুন </a>
                                         </div>
                                     </div>
-                            
+
                                 </div>
                             </div>
                         </div>
@@ -312,7 +329,7 @@
                                     <p class="footer_des">{!!$generalsetting->description!!}</p>
                                 </div>
                                 <div class="footer-about">
-                                    
+
                                     <li class="con_title"><a>Contact Us</a></li>
                                     <p><i class="fa-solid fa-map"></i>{{$contact->address}}</p>
                                     <p><i class="fa-solid fa-headphones"></i><a href="tel:{{$contact->hotline}}" class="footer-hotlint">{{$contact->hotline}}</a></p>
@@ -433,7 +450,7 @@
                 @endif
             </ul>
         </div>
-        
+
 
         <div class="scrolltop" style="">
             <div class="scroll">
@@ -466,7 +483,7 @@
             feather.replace();
         </script>
         <script src="{{asset('public/backEnd/')}}/assets/js/toastr.min.js"></script>
-        {!! Toastr::message() !!} 
+        {!! Toastr::message() !!}
         @stack('script')
         <script>
             $(".quick_view").on("click", function () {
@@ -771,7 +788,7 @@
                $("body").css("overflow-y", "auto");
             })
         </script>
-        
+
         <!-- Google Tag Manager (noscript) -->
         @foreach($gtm_code as $gtm)
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-{{$gtm->code}}"
@@ -780,7 +797,7 @@
         @endforeach
         <div id="fb-root"></div>
         <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0&appId=740431513324176" nonce="DfzQTqZ6"></script>
-        
+
     </body>
     <script>
 

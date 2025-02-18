@@ -37,9 +37,7 @@
                     @if ($value->old_price)
                         <del>৳ {{ $value->old_price }}</del>
                     @endif
-
                     ৳ {{ $value->new_price }}
-
                 </p>
             @endif
         </div>

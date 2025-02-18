@@ -1,5 +1,6 @@
 @extends('backEnd.layouts.master')
-@section('title', 'Banner Manage')
+@section('title', 'Video Gallery Manage')
+
 @section('css')
     <link href="{{ asset('/public/backEnd/') }}/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css"
         rel="stylesheet" type="text/css" />
@@ -14,19 +15,18 @@
 @section('content')
     <div class="container-fluid">
 
-        <!-- start page title -->
+        <!-- start Video Gallery title -->
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
                     <div class="page-title-right">
-                        <a href="{{ route('banners.create') }}" class="btn btn-primary rounded-pill">Create</a>
-                        <a href="{{ route('banners.sort') }}" class="btn btn-info rounded-pill">Sort</a>
+                        <a href="{{ route('videogalleries.create') }}" class="btn btn-primary rounded-pill">Create</a>
                     </div>
-                    <h4 class="page-title">Banner Manage</h4>
+                    <h4 class="page-title">Video Gallery Manage</h4>
                 </div>
             </div>
         </div>
-        <!-- end page title -->
+        <!-- end Video Gallery title -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -35,20 +35,19 @@
                             <thead>
                                 <tr>
                                     <th>SL</th>
-                                    <th>Category</th>
-                                    <th>Image</th>
+                                    <th>Video Link</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
-
                             <tbody>
                                 @foreach ($data as $key => $value)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $value->category ? $value->category->name : '' }}</td>
-                                        <td><img src="{{ asset($value->image) }}" class="backend-image" alt=""></td>
+                                        <td>{{ $value->link }}
+                                        </td>
+
                                         <td>
                                             @if ($value->status == 1)
                                                 <span class="badge bg-soft-success text-success">Active</span>
@@ -59,7 +58,7 @@
                                         <td>
                                             <div class="button-list">
                                                 @if ($value->status == 1)
-                                                    <form method="post" action="{{ route('banners.inactive') }}"
+                                                    <form method="post" action="{{ route('videogalleries.inactive') }}"
                                                         class="d-inline">
                                                         @csrf
                                                         <input type="hidden" value="{{ $value->id }}" name="hidden_id">
@@ -68,7 +67,7 @@
                                                                 class="fe-thumbs-down"></i></button>
                                                     </form>
                                                 @else
-                                                    <form method="post" action="{{ route('banners.active') }}"
+                                                    <form method="post" action="{{ route('videogalleries.active') }}"
                                                         class="d-inline">
                                                         @csrf
                                                         <input type="hidden" value="{{ $value->id }}" name="hidden_id">
@@ -78,11 +77,11 @@
                                                     </form>
                                                 @endif
 
-                                                <a href="{{ route('banners.edit', $value->id) }}"
+                                                <a href="{{ route('videogalleries.edit', $value->id) }}"
                                                     class="btn btn-xs btn-primary waves-effect waves-light"><i
                                                         class="fe-edit-1"></i></a>
 
-                                                <form method="post" action="{{ route('banners.destroy') }}"
+                                                <form method="post" action="{{ route('videogalleries.destroy') }}"
                                                     class="d-inline">
                                                     @csrf
                                                     <input type="hidden" value="{{ $value->id }}" name="hidden_id">

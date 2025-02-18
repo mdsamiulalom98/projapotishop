@@ -364,6 +364,30 @@
                             </div>
                         </li>
                         <!-- nav items end -->
+                        <li>
+                            <a href="#sidebar-videogallery" data-bs-toggle="collapse">
+                                <i data-feather="image"></i>
+                                <span> Video Gallery </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebar-videogallery">
+                                <ul class="nav-second-level">
+                                    <li>
+                                        <a href="{{ route('videogalleries.create') }}"><i data-feather="file-plus"></i>
+                                           New</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('videogalleries.index') }}">
+                                            <i data-feather="file-plus"></i>
+                                            Manage
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- nav items end -->
                         @php
                             $pending_reviews = \App\Models\Review::where('status', 'pending')->count();
                         @endphp

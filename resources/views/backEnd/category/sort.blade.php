@@ -12,7 +12,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title-right">
-                    <a href="{{route('campaign.index')}}" class="btn btn-primary rounded-pill">Campaign Manage</a>
+                    <a href="{{route('categories.index')}}" class="btn btn-primary rounded-pill">Campaign Manage</a>
                 </div>
                 <h4 class="page-title">Campaign Sort</h4>
             </div>
@@ -54,7 +54,7 @@
         document.getElementById('save-order').addEventListener('click', function() {
             var order = sortable.toArray();
 
-            fetch('{{ route('campaign.orderupdate') }}', {
+            fetch('{{ route('categories.orderupdate') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -68,6 +68,7 @@
                 .then(data => {
                     if (data.success) {
                         alert('Order saved successfully!');
+                        window.location.reload();
                     } else {
                         alert('Failed to save order.');
                     }

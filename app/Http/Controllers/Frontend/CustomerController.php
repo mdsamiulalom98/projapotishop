@@ -568,6 +568,8 @@ class CustomerController extends Controller
         $payment->customer_id = $customer_id;
         $payment->payment_method = $request->payment_method;
         $payment->amount = $order->amount;
+        $payment->trx_id = $request->trx_id ?? '';
+        $payment->account_number = $request->sender_number ?? '';
         $payment->payment_status = 'pending';
         $payment->save();
 
@@ -613,9 +615,7 @@ class CustomerController extends Controller
             curl_close($ch);
         }
 
-        if ($request->payment_method == 'bkash') {
-            return redirect('/bkash/checkout-url/create?order_id=' . $order->id);
-        } elseif ($request->payment_method == 'shurjopay') {
+        if ($request->payment_method == 'shurjopay') {
             $info = array(
                 'currency' => "BDT",
                 'amount' => $order->amount,
