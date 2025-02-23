@@ -85,7 +85,8 @@
                                             <img src="{{ asset($porder->customer ? $porder->customer->image : '') }}"
                                                 class="img-fluid rounded-circle" alt="" />
                                         </div>
-                                        <p class="notify-details">{{ $porder->customer ? $porder->customer->name : '' }}
+                                        <p class="notify-details">
+                                            {{ $porder->customer ? $porder->customer->name : '' }}
                                         </p>
                                         <p class="text-muted mb-0 user-msg">
                                             <small>Invoice : {{ $porder->invoice_id }}</small>
@@ -373,8 +374,9 @@
                             <div class="collapse" id="sidebar-videogallery">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="{{ route('videogalleries.create') }}"><i data-feather="file-plus"></i>
-                                           New</a>
+                                        <a href="{{ route('videogalleries.create') }}"><i
+                                                data-feather="file-plus"></i>
+                                            New</a>
                                     </li>
 
                                     <li>
@@ -542,12 +544,24 @@
                                             Page</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('shippingcharges.index') }}"><i
-                                                data-feather="file-plus"></i> Shipping Charge</a>
+                                        <a href="{{ route('shippingcharges.index') }}">
+                                            <i data-feather="file-plus"></i> Shipping Charge</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('orderstatus.index') }}"><i data-feather="file-plus"></i>
+                                        <a href="{{ route('orderstatus.index') }}">
+                                            <i data-feather="file-plus"></i>
                                             Order Status</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('news.index') }}">
+                                            <i data-feather="file-plus"></i>
+                                            News</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('paymentmethods.index') }}">
+                                            <i data-feather="file-plus"></i>
+                                            Payment Methods
+                                        </a>
                                     </li>
                                 </ul>
                             </div>

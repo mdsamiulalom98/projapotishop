@@ -1,52 +1,51 @@
 @extends('backEnd.layouts.master')
-@section('title','Banner Sort')
+@section('title', 'Banner Sort')
 @section('css')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 @endsection
 
 @section('content')
-<div class="container-fluid">
+    <div class="container-fluid">
 
-    <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <div class="page-title-right">
-                    <a href="{{route('banners.index')}}" class="btn btn-primary rounded-pill">Banner Manage</a>
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+                    <div class="page-title-right">
+                        <a href="{{ route('banners.index') }}" class="btn btn-primary rounded-pill">Banner Manage</a>
+                    </div>
+                    <h4 class="page-title">Banner Sort</h4>
                 </div>
-                <h4 class="page-title">Banner Sort</h4>
             </div>
         </div>
+        <!-- end page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <ul id="category-list">
+                            @foreach ($data as $key => $value)
+                                <li class=" d-block mb-2" data-id="{{ $value->id }}">
+                                    <span style="min-width: 20px" class="d-inline-block">
+                                        {{ $loop->iteration }}
+                                    </span><span style="min-width: 180px" class="btn btn-success ">
+                                        <img src="{{ asset($value->image) }}" style="height: 50px;" />
+                                    </span>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <button id="save-order" class="btn btn-success">Save Order</button>
+                    </div> <!-- end card body-->
+                </div> <!-- end card -->
+            </div><!-- end col-->
+        </div>
     </div>
-    <!-- end page title -->
-   <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-               <ul id="category-list">
-                   @foreach($data as $key=>$value)
-                   <li class=" d-block mb-2"  data-id="{{ $value->id }}">
-                        <span style="min-width: 20px" class="d-inline-block">
-                            {{ $loop->iteration }}
-                        </span><span style="min-width: 180px"
-                            class="btn btn-success ">
-                            <img src="{{ asset($value->image) }}" style="height: 50px;" />
-                        </span>
-                    </li>
-                   @endforeach
-                </ul>
-                <button id="save-order" class="btn btn-success">Save Order</button>
-            </div> <!-- end card body-->
-        </div> <!-- end card -->
-    </div><!-- end col-->
-   </div>
-</div>
 @endsection
 
 
 @section('script')
 
- <script>
+    <script>
         // Initialize Sortable
         var sortable = new Sortable(document.getElementById('category-list'), {
             animation: 150
@@ -77,5 +76,5 @@
                 });
         });
     </script>
-<!-- third party js ends -->
+    <!-- third party js ends -->
 @endsection

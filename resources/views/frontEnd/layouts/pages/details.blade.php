@@ -106,7 +106,7 @@
                                                 <li><a href="{{ url('/') }}">Home</a></li>
                                                 <li><span>/</span></li>
                                                 <li><a
-                                                        href="{{ url('/category/' . $details->category->slug) }}">{{ $details->category->name }}</a>
+                                                        href="{{ url('category/' . $details->category->slug) }}">{{ $details->category->name }}</a>
                                                 </li>
                                                 @if ($details->subcategory)
                                                     <li><span>/</span></li>
@@ -275,7 +275,7 @@
                                                             </div>
                                                             <div class="mt-md-2 mt-2">
                                                                 <h4 class="font-weight-bold">
-                                                                    <a class="btn btn-success w-100 whatsapp_btn"
+                                                                    <a class="btn btn-success w-100 whatsapp_btn" target="_blank"
                                                                         href="{{ $contact->whatsapp }}">
                                                                         <i class="fa-brands fa-whatsapp"></i>
                                                                         Whatsapp
@@ -341,7 +341,7 @@
                 <div class="col-sm-8">
                     <!-- Description Section -->
                     <div class="description tab-content details-action-box" id="description">
-                        <h2>বিস্তারিত</h2>
+                        <h2 class="potro-sans">বিস্তারিত</h2>
                         <button id="copy-button" onclick="copyDescription()">Copy</button>
                         <p id="notification" style="display:none; color:green;">Description copied to clipboard!</p>
                         <div id="description-content">
@@ -479,7 +479,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="pro_vide">
-                        <h2>ভিডিও</h2>
+                        <h2 class="potro-sans">ভিডিও</h2>
                         <iframe width="100%" height="315"
                             src="https://www.youtube.com/embed/{{ $details->pro_video }}" title="YouTube video player"
                             frameborder="0"

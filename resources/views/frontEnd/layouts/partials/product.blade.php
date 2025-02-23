@@ -28,9 +28,7 @@
                     @if ($value->variable->old_price)
                         <del>৳ {{ $value->variable->old_price }}</del>
                     @endif
-
                     ৳ {{ $value->variable->new_price }}
-
                 </p>
             @else
                 <p>
@@ -44,27 +42,20 @@
     </div>
 </div>
 
-@if ($value->variable_count > 0 && $value->type == 0)
-    <div class="pro_btn">
-        <div class="cart_btn order_button">
-            <a href="{{ route('product', $value->slug) }}" class="addcartbutton">
-                <i class="fa fa-shopping-basket"></i>
-                অর্ডার করুন
-            </a>
-        </div>
+<div class="pro_btn">
+    <div class="cart_btn order_button">
+        <a  class="addcartbutton" data-id="{{ $value->id }}">
+            <i class="fa fa-shopping-basket"></i>
+        </a>
     </div>
-@else
-    <div class="pro_btn">
 
-        <form action="{{ route('cart.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="id" value="{{ $value->id }}" />
-            <input type="hidden" name="qty" value="1" />
-            <input type="hidden" name="order_now" value="অর্ডার করুন" />
-            <button type="submit">
-                <i class="fa fa-shopping-basket"></i>
-                অর্ডার করুন
-            </button>
-        </form>
-    </div>
-@endif
+    <form action="{{ route('cart.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="id" value="{{ $value->id }}" />
+        <input type="hidden" name="qty" value="1" />
+        <input type="hidden" name="order_now" value="অর্ডার করুন" />
+        <button type="submit" class="potro-sans">
+            অর্ডার করুন
+        </button>
+    </form>
+</div>

@@ -49,11 +49,11 @@ class FrontendController extends Controller
             ->withCount('variable')
             ->limit(12)
             ->get();
-        // return $hotdeal_top;
 
         $homecategory = Category::where(['front_view' => 1, 'status' => 1])
             ->orderBy('sort', 'ASC')
             ->get();
+
         $topcategories = Category::where(['top_category' => 1, 'status' => 1])->orderBy('sort', 'ASC')->get();
 
         $news = News::where(['status' => 1])

@@ -42,9 +42,9 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody id="category-list">
                                 @foreach ($data as $key => $value)
-                                    <tr>
+                                    <tr data-id="{{ $value->id }}">
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             @if ($value->front_view == 1)
@@ -140,5 +140,37 @@
     <script src="{{ asset('/public/backEnd/') }}/assets/libs/pdfmake/build/pdfmake.min.js"></script>
     <script src="{{ asset('/public/backEnd/') }}/assets/libs/pdfmake/build/vfs_fonts.js"></script>
     <script src="{{ asset('/public/backEnd/') }}/assets/js/pages/datatables.init.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <!-- third party js ends -->
+    <script>
+        // Initialize Sortable
+        var sortable = new Sortable(document.getElementById('category-list'), {
+            animation: 150,
+            onEnd: function(evt) {
+                console.log("New order:", sortable.toArray());
+                var order = sortable.toArray();
+
+                fetch('{{ route('categories.orderupdate') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            order: order
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                            toastr.success('Banner Order Saved Successfully!!');
+                        } else {
+                            alert('Failed to save order.');
+                        }
+                    });
+            }
+        });
+    </script>
 @endsection

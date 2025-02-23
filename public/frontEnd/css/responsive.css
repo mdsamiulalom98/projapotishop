@@ -6,9 +6,18 @@
     .mobile-filter-toggle {
         display: none;
     }
+
+    .wsit-nav-enabled {
+        --wsit-sticky-nav-w: 60px;
+        padding-left: 60px;
+    }
 }
 
 @media only screen and (min-width:320px) and (max-width:767px) {
+    .wsit-sticky-nav {
+        display: none;
+    }
+
     .description-nav {
         margin-top: 15px;
     }

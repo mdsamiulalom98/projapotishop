@@ -39,6 +39,7 @@ use App\Http\Controllers\Admin\ExpenseCategoriesController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\CampaignProController;
 use App\Http\Controllers\Admin\VideoGalleryController;
+use App\Http\Controllers\Admin\PaymentMethodController;
 
 Auth::routes();
 
@@ -553,5 +554,15 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('video-gallery/inactive', [VideoGalleryController::class, 'inactive'])->name('videogalleries.inactive');
     Route::post('video-gallery/active', [VideoGalleryController::class, 'active'])->name('videogalleries.active');
     Route::post('video-gallery/destroy', [VideoGalleryController::class, 'destroy'])->name('videogalleries.destroy');
+
+    // coupon code route
+    Route::get('payment-method/manage', [PaymentMethodController::class, 'index'])->name('paymentmethods.index');
+    Route::get('payment-method/create', [PaymentMethodController::class, 'create'])->name('paymentmethods.create');
+    Route::post('payment-method/save', [PaymentMethodController::class, 'store'])->name('paymentmethods.store');
+    Route::get('payment-method/{id}/edit', [PaymentMethodController::class, 'edit'])->name('paymentmethods.edit');
+    Route::post('payment-method/update', [PaymentMethodController::class, 'update'])->name('paymentmethods.update');
+    Route::post('payment-method/inactive', [PaymentMethodController::class, 'inactive'])->name('paymentmethods.inactive');
+    Route::post('payment-method/active', [PaymentMethodController::class, 'active'])->name('paymentmethods.active');
+    Route::post('payment-method/destroy', [PaymentMethodController::class, 'destroy'])->name('paymentmethods.destroy');
 
 });

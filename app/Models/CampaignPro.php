@@ -12,7 +12,7 @@ class CampaignPro extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'campaign_id', 'id')->select('id', 'name', 'slug', 'campaign_id', 'new_price', 'old_price', 'type')->orderBy('id', 'DESC');
+        return $this->hasMany(Product::class, 'campaign_id', 'id')->select('id', 'name', 'slug', 'campaign_id', 'new_price', 'old_price', 'type')->orderBy('id', 'DESC')->withCount('variable');
     }
 
 }

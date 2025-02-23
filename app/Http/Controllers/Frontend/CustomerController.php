@@ -7,19 +7,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Intervention\Image\Facades\Image;
-use App\Models\Customer;
-use App\Models\District;
-use App\Models\Order;
 use App\Models\ShippingCharge;
-use App\Models\OrderDetails;
-use App\Models\Payment;
-use App\Models\Shipping;
-use App\Models\Review;
 use App\Models\PaymentGateway;
 use App\Models\SellerWithdraw;
-use App\Models\SmsGateway;
 use App\Models\GeneralSetting;
+use App\Models\PaymentMethod;
+use App\Models\OrderDetails;
+use App\Models\SmsGateway;
 use App\Models\CouponCode;
+use App\Models\Shipping;
+use App\Models\District;
+use App\Models\Customer;
+use App\Models\Payment;
+use App\Models\Review;
+use App\Models\Order;
 use Carbon\Carbon;
 use Session;
 use Hash;
@@ -429,6 +430,7 @@ class CustomerController extends Controller
     }
     public function checkout()
     {
+        $paymentmethods = PaymentMethod::where(['status' => 1])->get();
         $shippingcharge = ShippingCharge::where(['status' => 1, 'website' => 1])->get();
         $select_charge = ShippingCharge::where(['status' => 1, 'website' => 1])->first();
         $bkash_gateway = PaymentGateway::where(['status' => 1, 'type' => 'bkash'])->first();
@@ -440,7 +442,7 @@ class CustomerController extends Controller
             Session::put('shipping', $select_charge->amount);
         }
 
-        return view('frontEnd.layouts.customer.checkout', compact('shippingcharge', 'bkash_gateway', 'shurjopay_gateway', 'sms_gateway'));
+        return view('frontEnd.layouts.customer.checkout', compact('shippingcharge', 'bkash_gateway', 'shurjopay_gateway', 'sms_gateway', 'paymentmethods'));
     }
     public function order_otp(Request $request)
     {
@@ -614,8 +616,10 @@ class CustomerController extends Controller
             $response = curl_exec($ch);
             curl_close($ch);
         }
-
-        if ($request->payment_method == 'shurjopay') {
+        
+        if ($request->payment_method == 'bkash') {
+            return redirect('/bkash/checkout-url/create?order_id=' . $order->id);
+        } elseif ($request->payment_method == 'shurjopay') {
             $info = array(
                 'currency' => "BDT",
                 'amount' => $order->amount,

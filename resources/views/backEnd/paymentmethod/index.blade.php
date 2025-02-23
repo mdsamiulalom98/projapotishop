@@ -1,5 +1,5 @@
 @extends('backEnd.layouts.master')
-@section('title', 'Banner Manage')
+@section('title', 'Payment Method Manage')
 @section('css')
     <link href="{{ asset('/public/backEnd/') }}/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css"
         rel="stylesheet" type="text/css" />
@@ -19,10 +19,10 @@
             <div class="col-12">
                 <div class="page-title-box">
                     <div class="page-title-right">
-                        <a href="{{ route('banners.create') }}" class="btn btn-primary rounded-pill">Create</a>
-                        <a href="{{ route('banners.sort') }}" class="btn btn-info rounded-pill">Sort</a>
+                        <a href="{{ route('paymentmethods.create') }}" class="btn btn-primary rounded-pill">Create</a>
+
                     </div>
-                    <h4 class="page-title">Banner Manage</h4>
+                    <h4 class="page-title">Payment Method Manage</h4>
                 </div>
             </div>
         </div>
@@ -42,11 +42,11 @@
                                 </tr>
                             </thead>
 
-                            <tbody id="category-list">
+                            <tbody>
                                 @foreach ($data as $key => $value)
-                                    <tr data-id="{{ $value->id }}">
+                                    <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $value->category ? $value->category->name : '' }}</td>
+                                        <td>{{ $value->name }}</td>
                                         <td><img src="{{ asset($value->image) }}" class="backend-image" alt=""></td>
                                         <td>
                                             @if ($value->status == 1)
@@ -58,7 +58,7 @@
                                         <td>
                                             <div class="button-list">
                                                 @if ($value->status == 1)
-                                                    <form method="post" action="{{ route('banners.inactive') }}"
+                                                    <form method="post" action="{{ route('paymentmethods.inactive') }}"
                                                         class="d-inline">
                                                         @csrf
                                                         <input type="hidden" value="{{ $value->id }}" name="hidden_id">
@@ -67,7 +67,7 @@
                                                                 class="fe-thumbs-down"></i></button>
                                                     </form>
                                                 @else
-                                                    <form method="post" action="{{ route('banners.active') }}"
+                                                    <form method="post" action="{{ route('paymentmethods.active') }}"
                                                         class="d-inline">
                                                         @csrf
                                                         <input type="hidden" value="{{ $value->id }}" name="hidden_id">
@@ -77,11 +77,11 @@
                                                     </form>
                                                 @endif
 
-                                                <a href="{{ route('banners.edit', $value->id) }}"
+                                                <a href="{{ route('paymentmethods.edit', $value->id) }}"
                                                     class="btn btn-xs btn-primary waves-effect waves-light"><i
                                                         class="fe-edit-1"></i></a>
 
-                                                <form method="post" action="{{ route('banners.destroy') }}"
+                                                <form method="post" action="{{ route('paymentmethods.destroy') }}"
                                                     class="d-inline">
                                                     @csrf
                                                     <input type="hidden" value="{{ $value->id }}" name="hidden_id">
@@ -95,12 +95,14 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-                </div>
-            </div>
+
+                    </div> <!-- end card body-->
+                </div> <!-- end card -->
+            </div><!-- end col-->
         </div>
     </div>
 @endsection
+
 
 @section('script')
     <!-- third party js -->
@@ -123,36 +125,5 @@
     <script src="{{ asset('/public/backEnd/') }}/assets/libs/pdfmake/build/pdfmake.min.js"></script>
     <script src="{{ asset('/public/backEnd/') }}/assets/libs/pdfmake/build/vfs_fonts.js"></script>
     <script src="{{ asset('/public/backEnd/') }}/assets/js/pages/datatables.init.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <!-- third party js ends -->
-    <script>
-        // Initialize Sortable
-        var sortable = new Sortable(document.getElementById('category-list'), {
-            animation: 150,
-            onEnd: function(evt) {
-                console.log("New order:", sortable.toArray());
-                var order = sortable.toArray();
-
-                fetch('{{ route('banners.orderupdate') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            order: order
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            window.location.reload();
-                            toastr.success('Banner Order Saved Successfully!!');
-                        } else {
-                            alert('Failed to save order.');
-                        }
-                    });
-            }
-        });
-    </script>
 @endsection

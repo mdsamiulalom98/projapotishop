@@ -21,7 +21,7 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
-        $data = Category::orderBy('id', 'DESC')->with('category')->get();
+        $data = Category::orderBy('sort', 'ASC')->with('category')->get();
         // return $data;
         return view('backEnd.category.index', compact('data'));
     }
