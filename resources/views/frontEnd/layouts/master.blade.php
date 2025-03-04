@@ -1,37 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta name="google-site-verification" content="w-8P-z3yDwtpLjhc5Mhp0QfDYz8xxSSTRJQmcLGPQXg" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title') - {{ $generalsetting->name }}</title>
-    <!-- App favicon -->
+<meta name="google-site-verification" content="w-8P-z3yDwtpLjhc5Mhp0QfDYz8xxSSTRJQmcLGPQXg" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<title>@yield('title') - {{ $generalsetting->name }}</title>
+<!-- App favicon -->
 
-    <link rel="shortcut icon" href="{{ asset($generalsetting->favicon) }}" alt="{{ $generalsetting->name }}" />
-    <meta name="author" content="{{ $generalsetting->name }}" />
-    <link rel="canonical" href="{{ route('home') }}" />
-    @stack('seo')
-    @stack('css')
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/animate.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/woodmart-font.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/all.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/owl.carousel.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/owl.theme.default.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/mobile-menu.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/select2.min.css') }}" />
-    <!-- toastr css -->
-    <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
+<link rel="shortcut icon" href="{{ asset($generalsetting->favicon) }}" alt="{{ $generalsetting->name }}" />
+<meta name="author" content="{{ $generalsetting->name }}" />
+<link rel="canonical" href="{{ route('home') }}" />
+@stack('seo')
+@stack('css')
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/bootstrap.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/animate.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/woodmart-font.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/all.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/owl.carousel.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/owl.theme.default.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/mobile-menu.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/select2.min.css') }}" />
+<!-- toastr css -->
+<link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
 
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/wsit-menu.css') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=2.0.10') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=2.0.10') }}" />
-    <link rel="stylesheet" href="{{ asset('public/frontEnd/css/main.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/wsit-menu.css') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=2.0.20') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=2.0.13') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/main.css') }}" />
 
-    <!-- sc -->
+<!-- sc -->
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EHHESR0YN5"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-EHHESR0YN5');
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EHHESR0YN5"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-EHHESR0YN5');
+</script>
+<!-- sc -->
+@foreach($pixels as $pixel)
+<!-- Meta Pixel Code -->
+<script>
+    ! function(f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function() {
+            n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ $pixel->code }}');
+    fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id={{ $pixel->code }}&ev=PageView&noscript=1" /></noscript>
+<!-- End Meta Pixel Code -->
+@endforeach
+@foreach ($gtm_code as $gtm)
     <!-- Google Tag Manager -->
     <script>
         (function(w, d, s, l, i) {
@@ -47,90 +100,19 @@
             j.src =
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-TKBKSR3N');
+        })
+        (window, document, 'script', 'dataLayer', '{{ $gtm->code }}');
     </script>
     <!-- End Google Tag Manager -->
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EHHESR0YN5"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+@endforeach
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-EHHESR0YN5');
-    </script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EHHESR0YN5"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'G-EHHESR0YN5');
-    </script>
-    <!-- sc -->
-    <!-- Meta Pixel Code -->
-    <script>
-        ! function(f, b, e, v, n, t, s) {
-            if (f.fbq) return;
-            n = f.fbq = function() {
-                n.callMethod ?
-                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-            };
-            if (!f._fbq) f._fbq = n;
-            n.push = n;
-            n.loaded = !0;
-            n.version = '2.0';
-            n.queue = [];
-            t = b.createElement(e);
-            t.async = !0;
-            t.src = v;
-            s = b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t, s)
-        }(window, document, 'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '376270471730093');
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=376270471730093&ev=PageView&noscript=1" /></noscript>
-    <!-- End Meta Pixel Code -->
-
-    @foreach ($gtm_code as $gtm)
-        <!-- Google tag (gtag.js) -->
-        <script>
-            (function(w, d, s, l, i) {
-                w[l] = w[l] || [];
-                w[l].push({
-                    'gtm.start': new Date().getTime(),
-                    event: 'gtm.js'
-                });
-                var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s),
-                    dl = l != 'dataLayer' ? '&l=' + l : '';
-                j.async = true;
-                j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-                f.parentNode.insertBefore(j, f);
-            })
-            (window, document, 'script', 'dataLayer', 'GTM-{{ $gtm->code }}');
-        </script>
-        <!-- End Google Tag Manager -->
-    @endforeach
-
-    <style>
-        .desc-nav-ul li a.active {
-            background-color: #0a3a66;
-            color: #fff;
-        }
-    </style>
+<style>
+    .desc-nav-ul li a.active {
+        background-color: #0a3a66;
+        color: #fff;
+    }
+</style>
 </head>
 
 <body class="gotop wsit-nav-enabled">
@@ -149,7 +131,10 @@
                         <span class="nav-link-text">{{ $scategory->name }}</span>
                     </a>
                     @if ($scategory->subcategories->count() > 0)
-                        <div class="subcategory-sidemenu">
+                        <span class="nav-link-icon">
+                            <i class="fa fa-chevron-right"></i>
+                        </span>
+                        <div class="subcategory-sidemenu" style="display: none;">
                             <ul>
                                 @foreach ($scategory->subcategories as $subcategory)
                                     <li>
@@ -895,6 +880,27 @@
                     $(this).closest(".parent-subcategory").toggleClass("active");
                 });
             });
+            // desktop sidebar
+            $(".menu-item-has-children").each(function() {
+                const menuCatToggle = $(this).find(".nav-link-icon");
+                const secondNav = $(this).find(".subcategory-sidemenu");
+
+                menuCatToggle.on("click", function() {
+                    menuCatToggle.toggleClass("active");
+                    secondNav.slideToggle("fast");
+                    $(this).closest(".menu-item-has-children").toggleClass("active");
+                });
+            });
+            $(".parent-subcategory").each(function() {
+                const menuSubcatToggle = $(this).find(".menu-subcategory-toggle");
+                const thirdNav = $(this).find(".third-nav");
+
+                menuSubcatToggle.on("click", function() {
+                    menuSubcatToggle.toggleClass("active");
+                    thirdNav.slideToggle("fast");
+                    $(this).closest(".parent-subcategory").toggleClass("active");
+                });
+            });
         });
     </script>
 
@@ -931,7 +937,8 @@
 
     <!-- Google Tag Manager (noscript) -->
     @foreach ($gtm_code as $gtm)
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-{{ $gtm->code }}" height="0"
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $gtm->code }}" height="0"
                 width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
     @endforeach

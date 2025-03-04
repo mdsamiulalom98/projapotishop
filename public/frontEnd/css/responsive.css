@@ -14,6 +14,10 @@
 }
 
 @media only screen and (min-width:320px) and (max-width:767px) {
+    .section-title h2 {
+        font-size: 15px;
+    }
+
     .wsit-sticky-nav {
         display: none;
     }

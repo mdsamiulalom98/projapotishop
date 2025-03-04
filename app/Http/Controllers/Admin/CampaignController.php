@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CampaignBanner;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\CampaignReview;
@@ -34,19 +35,26 @@ class CampaignController extends Controller
             'status' => 'required',
         ]);
 
-        $input = $request->except(['files', 'image']);
-
-        // banner
-        $image1 = $request->file('banner');
-        $name1 = time() . '-' . $image1->getClientOriginalName();
-        $name1 = strtolower(preg_replace('/\s+/', '-', $name1));
-        $uploadPath1 = 'public/uploads/campaign/';
-        $image1->move($uploadPath1, $name1);
-        $imageUrl1 = $uploadPath1 . $name1;
+        $input = $request->except(['files', 'image', 'banner']);
 
         $input['slug'] = strtolower(Str::slug($request->name));
-        $input['banner'] = $imageUrl1;
         $campaign = Campaign::create($input);
+
+        $banners = $request->file('banner');
+        if ($banners) {
+            foreach ($banners as $key => $banner) {
+                $bname = time() . '-' . $banner->getClientOriginalName();
+                $bname = strtolower(preg_replace('/\s+/', '-', $bname));
+                $buploadPath = 'public/uploads/campaign/';
+                $banner->move($buploadPath, $bname);
+                $bannerUrl = $buploadPath . $bname;
+
+                $pimage = new CampaignBanner();
+                $pimage->campaign_id = $campaign->id;
+                $pimage->image = $bannerUrl;
+                $pimage->save();
+            }
+        }
 
         $images = $request->file('image');
         if ($images) {
@@ -62,7 +70,6 @@ class CampaignController extends Controller
                 $pimage->image = $imageUrl;
                 $pimage->save();
             }
-
         }
 
         Toastr::success('Success', 'Data insert successfully');
@@ -89,26 +96,27 @@ class CampaignController extends Controller
         ]);
         // image one
         $update_data = Campaign::find($request->hidden_id);
-        $input = $request->except('hidden_id', 'product_ids', 'files', 'image');
-
-        $image1 = $request->file('banner');
-        if ($image1) {
-            $image1 = $request->file('banner');
-            $name1 = time() . '-' . $image1->getClientOriginalName();
-            $name1 = strtolower(preg_replace('/\s+/', '-', $name1));
-            $uploadPath1 = 'public/uploads/campaign/';
-            $image1->move($uploadPath1, $name1);
-            $imageUrl1 = $uploadPath1 . $name1;
-            File::delete($update_data->banner);
-            $input['banner'] = $imageUrl1;
-        } else {
-            $input['banner'] = $update_data->banner;
-        }
-
+        $input = $request->except('hidden_id', 'product_ids', 'files', 'image', 'banner');
 
         $input['slug'] = strtolower(Str::slug($request->name));
         $update_data = Campaign::find($request->hidden_id);
         $update_data->update($input);
+
+        $banners = $request->file('banner');
+        if ($banners) {
+            foreach ($banners as $key => $banner) {
+                $bname = time() . '-' . $banner->getClientOriginalName();
+                $bname = strtolower(preg_replace('/\s+/', '-', $bname));
+                $buploadPath = 'public/uploads/campaign/';
+                $banner->move($buploadPath, $bname);
+                $bannerUrl = $buploadPath . $bname;
+
+                $pimage = new CampaignBanner();
+                $pimage->campaign_id = $update_data->id;
+                $pimage->image = $bannerUrl;
+                $pimage->save();
+            }
+        }
 
         $images = $request->file('image');
         if ($images) {
@@ -164,6 +172,14 @@ class CampaignController extends Controller
     public function imgdestroy(Request $request)
     {
         $delete_data = CampaignReview::find($request->id);
+        File::delete($delete_data->image);
+        $delete_data->delete();
+        Toastr::success('Success', 'Data delete successfully');
+        return redirect()->back();
+    }
+    public function bannerdestroy(Request $request)
+    {
+        $delete_data = CampaignBanner::find($request->id);
         File::delete($delete_data->image);
         $delete_data->delete();
         Toastr::success('Success', 'Data delete successfully');

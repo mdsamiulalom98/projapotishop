@@ -16,4 +16,7 @@ class Campaign extends Model
     public function images(){
         return $this->hasMany(CampaignReview::class, 'campaign_id')->select('id','image','campaign_id');
     }
+    public function banners(){
+        return $this->hasMany(CampaignBanner::class, 'campaign_id')->select('id','image','campaign_id');
+    }
 }

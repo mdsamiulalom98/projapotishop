@@ -59,13 +59,13 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="sec_title">
-                        <h3 class="section-title-header">
+                        <h1 class="section-title-header">
                             <div class="timer_inner">
                                 <div class="">
                                     <span class="section-title-name"> Top Categories </span>
                                 </div>
                             </div>
-                        </h3>
+                        </h1>
                     </div>
                 </div>
 

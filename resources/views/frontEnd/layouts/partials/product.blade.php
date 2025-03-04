@@ -23,19 +23,34 @@
             <a href="{{ route('product', $value->slug) }}">{{ Str::limit($value->name, 80) }}</a>
         </div>
         <div class="pro_price">
-            @if ($value->variable_count > 0 && $value->type == 0)
+            @if (!empty($value->campaign_id))
                 <p>
-                    @if ($value->variable->old_price)
-                        <del>৳ {{ $value->variable->old_price }}</del>
+                    @if ($value->variable_count > 0 && $value->type == 0)
+                        @if ($value->variable->old_price)
+                            <del>৳ {{ $value->variable->old_price }}</del>
+                        @endif
+                        ৳
+                        {{ round($value->variable->new_price - $value->variable->new_price * ($value->campaign->discount / 100)) }}
+                    @else
+                        @if ($value->old_price)
+                            <del>৳ {{ $value->old_price }}</del>
+                        @endif
+                        ৳ {{ round($value->new_price - $value->new_price * ($value->campaign->discount / 100)) }}
                     @endif
-                    ৳ {{ $value->variable->new_price }}
                 </p>
             @else
                 <p>
-                    @if ($value->old_price)
-                        <del>৳ {{ $value->old_price }}</del>
+                    @if ($value->variable_count > 0 && $value->type == 0)
+                        @if ($value->variable->old_price)
+                            <del>৳ {{ $value->variable->old_price }}</del>
+                        @endif
+                        ৳ {{ $value->variable->new_price }}
+                    @else
+                        @if ($value->old_price)
+                            <del>৳ {{ $value->old_price }}</del>
+                        @endif
+                        ৳ {{ $value->new_price }}
                     @endif
-                    ৳ {{ $value->new_price }}
                 </p>
             @endif
         </div>
@@ -44,18 +59,27 @@
 
 <div class="pro_btn">
     <div class="cart_btn order_button">
-        <a  class="addcartbutton" data-id="{{ $value->id }}">
-            <i class="fa fa-shopping-basket"></i>
+        <a @if ($value->variable_count > 0 && $value->type == 0) href="{{ route('product', $value->slug) }}" @else data-id="{{ $value->id }}" @endif
+            class="addcartbutton">
+            <img src="{{ asset('public/frontEnd/images/shopping_cart.png') }}">
         </a>
     </div>
 
-    <form action="{{ route('cart.store') }}" method="POST">
-        @csrf
-        <input type="hidden" name="id" value="{{ $value->id }}" />
-        <input type="hidden" name="qty" value="1" />
-        <input type="hidden" name="order_now" value="অর্ডার করুন" />
-        <button type="submit" class="potro-sans">
-            অর্ডার করুন
-        </button>
-    </form>
+    @if ($value->variable_count > 0 && $value->type == 0)
+        <div class="variable-details-button">
+            <a href="{{ route('product', $value->slug) }}" class="potro-sans">
+                অর্ডার করুন
+            </a>
+        </div>
+    @else
+        <form action="{{ route('cart.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="id" value="{{ $value->id }}" />
+            <input type="hidden" name="qty" value="1" />
+            <input type="hidden" name="order_now" value="অর্ডার করুন" />
+            <button type="submit" class="potro-sans">
+                অর্ডার করুন
+            </button>
+        </form>
+    @endif
 </div>

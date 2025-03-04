@@ -1,35 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+
 body {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     outline: 0;
     font-family: "Hind Siliguri", sans-serif;
 }
 
-ul,li,h1,h2,h3,h4,h5,h6,p {
-    margin:0;
-    padding:0;
+ul, li, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
     outline: 0;
 }
+
 li {
     list-style: none;
     display: inline-block;
 }
+
 a:hover,
 a:focus,
 a {
     text-decoration: none;
-    color:#000;
+    color: #000;
 }
+
 form input::placeholder {
     font-size: 15px;
     color: #888;
 }
+
 button:focus,
 button {
     border: none !important;
     box-shadow: none !important;
 }
+
 input:focus {
     box-shadow: none !important;
 }
@@ -38,6 +44,7 @@ input:focus {
 .banner_title {
     margin-top: 40px;
 }
+
 .banner_title h2 {
     color: #FF0000;
     margin: 40px 0;
@@ -49,11 +56,13 @@ input:focus {
 .banner-img {
     text-align: center;
 }
+
 .banner-img img {
     border-radius: 10px;
     overflow: hidden;
     width: 100%;
 }
+
 /*=== Banner section end===*/
 
 /*=== short des section start===*/
@@ -63,6 +72,7 @@ input:focus {
     text-align: center;
     padding: 36px 0;
 }
+
 .ord_btn {
     text-align: center;
 }
@@ -79,25 +89,31 @@ input:focus {
     border-radius: 50px;
     transition: 0.35s all;
 }
+
 .order_place:hover {
     color: #fff;
     box-shadow: 0px 4px 8px 2px #FF0000;
 }
+
 @keyframes smoothZoom {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-  }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
+
 .order_place {
-  display: inline-block;
-  animation: smoothZoom 2s ease-in-out infinite;
+    display: inline-block;
+    animation: smoothZoom 2s ease-in-out infinite;
 }
+
 /*=== short des section end===*/
 
 /*=== desciption section start===*/
@@ -107,25 +123,30 @@ input:focus {
     padding: 10px 0;
     text-align: center;
 }
+
 section.description-section {
     padding: 55px 0;
 }
+
 .description-inner {
     border: 2px solid #2ECC71;
     border-radius: 10px;
     overflow: hidden;
 }
+
 .main-description ul li {
     display: block;
     padding: 10px 18px;
     font-size: 18px;
     border-bottom: 1px solid #2ECC71;
 }
+
 .main-description ul li::before {
-  content: ' ✔';
-  color: #2ECC71;
-  margin-left: 5px;
+    content: ' ✔';
+    color: #2ECC71;
+    margin-left: 5px;
 }
+
 /*=== desciption section end===*/
 
 /*=== whychoose section start===*/
@@ -135,22 +156,26 @@ section.description-section {
     padding: 10px 0;
     text-align: center;
 }
+
 .whychoose-inner {
     border: 2px solid #FF0000;
     border-radius: 10px;
     overflow: hidden;
 }
+
 .main-whychoose ul li {
     display: block;
     padding: 10px 18px;
     font-size: 18px;
     border-bottom: 1px solid #FF0000;
 }
+
 .main-whychoose ul li::before {
-  content: ' 👉';
-  color: #FF0000;
-  margin-left: 5px;
+    content: ' 👉';
+    color: #FF0000;
+    margin-left: 5px;
 }
+
 /*=== desciption section end===*/
 
 .rev_title h2 {
@@ -161,6 +186,7 @@ section.description-section {
     margin-bottom: 0;
     border-radius: 10px 10px 0px 0px;
 }
+
 .offer_title h2 {
     border: 5px solid #2ECC71;
     text-align: center;
@@ -171,6 +197,7 @@ section.description-section {
     margin-bottom: 25px;
     font-weight: 700;
 }
+
 .product-price {
     text-align: center;
 }
@@ -180,6 +207,7 @@ section.description-section {
     margin: 5px 0;
     font-weight: 600;
 }
+
 p.old_price {
     color: #FF0000;
 }
@@ -188,6 +216,7 @@ p.old_price {
     font-weight: 600;
     margin-bottom: 10px;
 }
+
 .qty-cart .quantity {
     position: relative;
     border: 1px solid #ddd;
@@ -195,9 +224,11 @@ p.old_price {
     overflow: hidden;
     margin: 20px 0;
 }
+
 .qty-cart {
-   width: 150px;
+    width: 150px;
 }
+
 .quantity input {
     position: relative;
     text-align: center;
@@ -207,6 +238,7 @@ p.old_price {
     pointer-events: none;
     font-weight: 500;
 }
+
 .quantity .minus {
     position: absolute;
     left: 0;
@@ -220,6 +252,7 @@ p.old_price {
     font-size: 40px;
     cursor: pointer;
 }
+
 .quantity input {
     position: relative;
     text-align: center;
@@ -230,6 +263,7 @@ p.old_price {
     font-weight: 500;
     border: 0;
 }
+
 .quantity .plus {
     position: absolute;
     right: 0;
@@ -243,21 +277,24 @@ p.old_price {
     font-size: 26px;
     cursor: pointer;
 }
+
 .form_inn {
     border-style: solid;
     border-width: 10px 10px 10px 10px;
     border-color: #2ECC71;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
     transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
     padding: 30px 40px 30px 40px;
     border-radius: 10px 10px 10px 10px;
 }
+
 div#order_form .card-header {
     background: #2ECC71;
     color: #fff;
 }
+
 .form_sec {
-    padding:30px 0;
+    padding: 30px 0;
 }
 
 
@@ -288,11 +325,13 @@ div#order_form .card-header {
     appearance: none;
     display: none;
 }
+
 .color_inner .selector .selector-item label {
     cursor: pointer;
     border: 1px solid #2ECC71;
     border-radius: 3px;
 }
+
 .selector-item label {
     border: 1px solid #2ECC71;
 }
@@ -330,6 +369,7 @@ div#order_form .card-header {
     border-color: #2ECC71;
     cursor: pointer;
 }
+
 .color_size {
     display: flex;
     justify-content: center;
@@ -360,8 +400,25 @@ div#order_form .card-header {
     margin-top: 6px;
     font-weight: 600;
 }
+
 .confirm_order:disabled {
     background: #95ab9e;
     cursor: no-drop;
 }
+
 /* ====Color Size Details Css ====*/
+
+.banner-image-wrapper {
+    overflow: hidden;
+    height: 600px;
+}
+
+.banner-image {
+    height: 600px;
+}
+
+.banner-image img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}

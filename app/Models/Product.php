@@ -52,4 +52,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariable::class)->where('stock','>',0);
     }
+
+    public function campaign()
+    {
+        return $this->hasOne(CampaignPro::class, 'id', 'campaign_id');
+    }
 }

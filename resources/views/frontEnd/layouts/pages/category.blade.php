@@ -36,7 +36,7 @@
                         <div class="category-breadcrumb d-flex align-items-center">
                             <a href="{{ route('home') }}">Home</a>
                             <span>/</span>
-                            <strong>{{ $category->name }}</strong>
+                            <h1>{{ $category->name }}</h1>
                         </div>
                     </div>
                     <div class="col-sm-6">

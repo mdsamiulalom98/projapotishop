@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\ProductVariable;
 use App\Models\Product;
+use App\Models\CampaignPro;
 
 class ShoppingController extends Controller
 {
@@ -39,14 +40,19 @@ class ShoppingController extends Controller
     {
 
         $product = Product::select('id', 'name', 'slug', 'new_price', 'old_price', 'purchase_price', 'type', 'free_shipping', 'stock', 'commision')->where(['id' => $request->id])->first();
-        //return $product;
         $var_product = ProductVariable::where(['product_id' => $request->id, 'color' => $request->product_color, 'size' => $request->product_size])->first();
+        $campaign = CampaignPro::where(['status' => 1, 'id' => $product->campaign_id])->first();
         if ($product->type == 0) {
             $purchase_price = $var_product ? $var_product->purchase_price : 0;
             $old_price = $var_product ? $var_product->old_price : 0;
             $new_price = $var_product ? $var_product->new_price : 0;
             $stock = $var_product ? $var_product->stock : 0;
             $commision = (($product->commision * $var_product->new_price) / 100) * $request->qty;
+            if ($campaign) {
+                $new_price = $var_product && $var_product->new_price
+                    ? round(($var_product->new_price - ($var_product->new_price / 100) * $campaign->discount))
+                    : 0;
+            }
 
         } else {
             $purchase_price = $product->purchase_price;
@@ -54,6 +60,9 @@ class ShoppingController extends Controller
             $new_price = $product->new_price;
             $stock = $product->stock;
             $commision = (($product->commision * $product->new_price) / 100) * $request->qty;
+            if ($campaign) {
+                $new_price = round(($product->new_price - ($product->new_price / 100) * $campaign->discount));
+            }
         }
         //return $commision;
 

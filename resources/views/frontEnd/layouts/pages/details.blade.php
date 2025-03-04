@@ -125,20 +125,45 @@
                                         <div class="product">
                                             <div class="product-cart">
                                                 <p class="name">{{ $details->name }}</p>
-                                                @if ($details->variable_count > 0 && $details->type == 0)
-                                                    <p class="details-price">
-                                                        @if ($details->variable->old_price)
-                                                            <del>৳ <span
-                                                                    class="old_price">{{ $details->variable->old_price }}</span></del>
-                                                        @endif ৳ <span
-                                                            class="new_price">{{ $details->variable->new_price }}</span>
-                                                    </p>
+                                                @if (!empty($details->campaign_id))
+                                                    @if ($details->variable_count > 0 && $details->type == 0)
+                                                        <p class="details-price">
+                                                            @if ($details->variable->old_price)
+                                                                <del>
+                                                                    ৳ <span
+                                                                        class="old_price">{{ $details->variable->old_price }}</span>
+                                                                </del>
+                                                            @endif
+                                                            ৳ <span
+                                                                class="new_price">{{ round($details->variable->new_price - $details->variable->new_price * ($details->campaign->discount / 100)) }}</span>
+                                                        </p>
+                                                    @else
+                                                        <p class="details-price">
+                                                            @if ($details->old_price)
+                                                                <del>৳{{ $details->old_price }}</del>
+                                                            @endif
+                                                            ৳
+                                                            {{ round($details->new_price - $details->new_price * ($details->campaign->discount / 100)) }}
+                                                            <span style="font-size:14px;">Stock:
+                                                                {{ $details->stock }}</span>
+                                                        </p>
+                                                    @endif
                                                 @else
-                                                    <p class="details-price">
-                                                        @if ($details->old_price)
-                                                            <del>৳{{ $details->old_price }}</del>
-                                                        @endif ৳{{ $details->new_price }}
-                                                    </p>
+                                                    @if ($details->variable_count > 0 && $details->type == 0)
+                                                        <p class="details-price">
+                                                            @if ($details->variable->old_price)
+                                                                <del>৳ <span
+                                                                        class="old_price">{{ $details->variable->old_price }}</span></del>
+                                                            @endif ৳ <span
+                                                                class="new_price">{{ $details->variable->new_price }}</span>
+                                                        </p>
+                                                    @else
+                                                        <p class="details-price">
+                                                            @if ($details->old_price)
+                                                                <del>৳{{ $details->old_price }}</del>
+                                                            @endif ৳{{ $details->new_price }}
+                                                        </p>
+                                                    @endif
                                                 @endif
                                                 <div class="details-ratting-wrapper">
                                                     @php
@@ -253,13 +278,13 @@
                                                         </div>
                                                         <div class="d-flex single_product col-sm-12">
                                                             <input type="submit" class="btn px-4 add_cart_btn"
-                                                                onclick="return sendSuccess();" name="add_cart"
-                                                                value="কার্টে যোগ করুন " />
+                                                                onclick="return sendSuccess();" id="add_to_cart"
+                                                                name="add_cart" value="কার্টে যোগ করুন " />
 
                                                             <input type="submit"
                                                                 class="btn px-4 order_now_btn order_now_btn_m"
-                                                                onclick="return sendSuccess();" name="order_now"
-                                                                value="অর্ডার করুন" />
+                                                                onclick="return sendSuccess();" id="order_now"
+                                                                name="order_now" value="অর্ডার করুন" />
                                                         </div>
                                                     </div>
                                                     <div class="row">
@@ -275,8 +300,8 @@
                                                             </div>
                                                             <div class="mt-md-2 mt-2">
                                                                 <h4 class="font-weight-bold">
-                                                                    <a class="btn btn-success w-100 whatsapp_btn" target="_blank"
-                                                                        href="{{ $contact->whatsapp }}">
+                                                                    <a class="btn btn-success w-100 whatsapp_btn"
+                                                                        target="_blank" href="{{ $contact->whatsapp }}">
                                                                         <i class="fa-brands fa-whatsapp"></i>
                                                                         Whatsapp
                                                                     </a>
@@ -591,7 +616,7 @@
             $('#add_to_cart').click(function() {
                 gtag("event", "add_to_cart", {
                     currency: "BDT",
-                    value: "1.5",
+                    value: "{{ Cart::instance('shopping')->subtotal() }}",
                     items: [
                         @foreach (Cart::instance('shopping')->content() as $cartInfo)
                             {
@@ -612,14 +637,13 @@
             $('#order_now').click(function() {
                 gtag("event", "add_to_cart", {
                     currency: "BDT",
-                    value: "1.5",
+                    value: "{{ Cart::instance('shopping')->subtotal() }}",
                     items: [
                         @foreach (Cart::instance('shopping')->content() as $cartInfo)
                             {
                                 item_id: "{{ $details->id }}",
                                 item_name: "{{ $details->name }}",
                                 price: "{{ $details->new_price }}",
-                                currency: "BDT",
                                 quantity: {{ $cartInfo->qty ?? 0 }}
                             },
                         @endforeach

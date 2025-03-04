@@ -834,6 +834,7 @@ li.Newsletter i {
     justify-content: center;
     transition: all 0.3s ease;
 }
+
 .catagory_menu ul li a.desktop-toggle:hover .category-toggle-wrapper .toggle-round {
     background-color: #000;
 }
@@ -998,6 +999,7 @@ section.slider-section {
 .section-title h2 {
     font-size: 20px;
     font-weight: 600;
+    font-family: 'Lato', sans-serif;
 }
 
 .section-btn a {
@@ -1856,6 +1858,10 @@ form.withdraw_form label {
 /*======withdraw end=======*/
 
 /*====  CATEGORY CSS START ====  */
+section.video-gallery-section {
+    padding-bottom: 60px;
+}
+
 .page_title p {
     color: #000000;
     font-weight: 600;
@@ -1867,7 +1873,7 @@ form.withdraw_form label {
     padding: 15px 0;
     text-transform: uppercase;
     color: #fff;
-    margin: 10px 0;
+    margin: 35px 0;
 }
 
 .page_title {
@@ -3059,6 +3065,10 @@ section.product-inner {
     font-size: 16px;
 }
 
+.category-breadcrumb h1 {
+    font-size: 16px;
+}
+
 .main_product_inner {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -3241,11 +3251,16 @@ i.fa-regular.fa-trash-can.trash_icon:hover {
 
 .pro_btn {
     display: flex;
-    gap: 3px;
+    gap: 8px;
     width: 100%;
 }
 
-.pro_btn button {
+.variable-details-button {
+    flex: 1 1 auto;
+}
+
+.pro_btn button,
+.variable-details-button a {
     background: #7600E3;
     color: #fff;
     padding: 6px 0px;
@@ -3254,11 +3269,15 @@ i.fa-regular.fa-trash-can.trash_icon:hover {
     display: block;
     width: 100%;
     transition: all .5s ease;
-    border-radius: 0 30px 30px 0;
+    border-radius: 30px;
     font-weight: 600;
 }
 
-.pro_btn button:hover {
+.variable-details-button a {
+    text-align: center;
+}
+
+.pro_btn button:hover, .variable-details-button a:hover {
     background: #572830;
     color: #fff;
 }
@@ -3984,7 +4003,16 @@ ul.social_link {
 }
 
 .syotimer-cell__unit {
-    display: none;
+    background: #f95f29;
+    overflow: hidden;
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 10px;
+    padding: 3px 0;
+}
+
+.syotimer-cell__value {
+    padding: 5px 0;
 }
 
 .timer_inner {
@@ -3995,17 +4023,18 @@ ul.social_link {
 .timer_inner .syotimer__body {
     display: flex;
     grid-gap: 5px;
+    font-size: 13px;
 }
 
 .timer_inner .syotimer-cell {
-    width: 38px;
+    width: 30px;
     text-align: center;
     background: #7600E3;
     color: #fff;
     border-radius: 5px;
-    font-size: 15px;
-    padding: 6px 0;
+    font-size: 12px;
     font-weight: 600;
+    overflow: hidden;
 }
 
 .indicator_thumb {
@@ -4137,24 +4166,31 @@ a.forget-link {
 }
 
 .cart_btn.order_button {
-    flex: 0 0 40px;
+    flex: 0 0 50px;
 }
 
 .cart_btn.order_button a {
-    background: #7600E3;
-    border-radius: 30px 0 0 30px;
+    background: #f9632d;
+    border-radius: 30px;
     color: #fff;
     cursor: pointer;
-    display: block;
+    display: flex;
     font-size: 16px;
     font-weight: 600;
     height: 100%;
-    padding: 6px 0px;
     text-transform: uppercase;
-    transition: all .5s ease;
     text-align: center;
     transition: all .5s ease;
     width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.cart_btn.order_button a img {
+    height: 20px;
+    width: auto;
+    margin-right: 1px;
 }
 
 .cart_btn a:hover {
@@ -5045,17 +5081,11 @@ ul.social_link li:last-child {
 }
 
 .wsit-nav-sticky>li .subcategory-sidemenu {
-    position: absolute;
-    top: 0;
-    left: 100%;
+    position: relative;
     padding: 12px 20px;
-    min-height: 20px;
-    width: 220px;
     min-height: 20px;
     background: #fff;
     border-radius: 0px 10px 10px 0px;
-    visibility: hidden;
-    opacity: 0;
 }
 
 .wsit-nav-sticky>li:hover .subcategory-sidemenu {
@@ -5077,11 +5107,23 @@ ul.social_link li:last-child {
     line-height: 1.3;
 }
 
-.wsit-nav-sticky>li.menu-item-has-children>a:after {
-    margin-left: auto;
+span.nav-link-icon {
     color: #ddd;
-    font-weight: 600;
-    font-size: 10px;
-    font-family: fontAwesome;
-    content: "\f054";
+    font-size: 0.7rem;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    display: flex;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+span.nav-link-icon.active {
+    transform: rotate(90deg);
+}
+
+.subcategory-sidemenu ul li {
+    display: block;
 }

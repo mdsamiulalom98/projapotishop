@@ -354,6 +354,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('campaign/active', [CampaignController::class, 'active'])->name('campaign.active');
     Route::post('campaign/destroy', [CampaignController::class, 'destroy'])->name('campaign.destroy');
     Route::get('campaign/image/destroy', [CampaignController::class, 'imgdestroy'])->name('campaign.image.destroy');
+    Route::get('campaign/banner/destroy', [CampaignController::class, 'bannerdestroy'])->name('campaign.banner.destroy');
 
     // settings route
     Route::get('settings/manage', [GeneralSettingController::class, 'index'])->name('settings.index');

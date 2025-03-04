@@ -319,6 +319,7 @@
         dataLayer.push({
             event: "view_cart",
             ecommerce: {
+                value: {{ $subtotal + $shipping - ($discount + $coupon) }},
                 items: [
                     @foreach (Cart::instance('shopping')->content() as $cartInfo)
                         {
@@ -347,6 +348,8 @@
         dataLayer.push({
             event: "begin_checkout",
             ecommerce: {
+                value: {{ $subtotal + $shipping - ($discount + $coupon) }},
+                currency: "BDT",
                 items: [
                     @foreach (Cart::instance('shopping')->content() as $cartInfo)
                         {
@@ -357,7 +360,6 @@
                             item_category: "{{ $cartInfo->options->category }}",
                             item_size: "{{ $cartInfo->options->size }}",
                             item_color: "{{ $cartInfo->options->color }}",
-                            currency: "BDT",
                             quantity: {{ $cartInfo->qty ?? 0 }}
                         },
                     @endforeach
