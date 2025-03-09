@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="{{ asset('public/backEnd/') }}/assets/css/toastr.min.css" />
 
 <link rel="stylesheet" href="{{ asset('public/frontEnd/css/wsit-menu.css') }}" />
-<link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=2.0.20') }}" />
+<link rel="stylesheet" href="{{ asset('public/frontEnd/css/style.css?v=2.0.21') }}" />
 <link rel="stylesheet" href="{{ asset('public/frontEnd/css/responsive.css?v=2.0.13') }}" />
 <link rel="stylesheet" href="{{ asset('public/frontEnd/css/main.css') }}" />
 
