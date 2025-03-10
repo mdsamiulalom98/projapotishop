@@ -10,10 +10,10 @@ use File;
 use Toastr;
 class OrderStatusController extends Controller
 {
-    
+
     public function index(Request $request)
     {
-        $data = OrderStatus::orderBy('id','DESC')->get();
+        $data = OrderStatus::orderBy('id','asc')->get();
         return view('backEnd.orderstatus.index',compact('data'));
     }
     public function create()
@@ -32,13 +32,13 @@ class OrderStatusController extends Controller
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('orderstatus.index');
     }
-    
+
     public function edit($id)
     {
         $edit_data = OrderStatus::find($id);
         return view('backEnd.orderstatus.edit',compact('edit_data'));
     }
-    
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -52,7 +52,7 @@ class OrderStatusController extends Controller
         Toastr::success('Success','Data update successfully');
         return redirect()->route('orderstatus.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = OrderStatus::find($request->hidden_id);

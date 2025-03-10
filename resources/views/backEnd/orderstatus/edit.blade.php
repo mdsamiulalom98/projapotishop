@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -16,8 +16,8 @@
                 <h4 class="page-title">Order Status Edit</h4>
             </div>
         </div>
-    </div>       
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
    <div class="row justify-content-center">
     <div class="col-lg-8">
         <div class="card">
@@ -30,6 +30,18 @@
                             <label for="name" class="form-label">Name *</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $edit_data->name}}" id="name" required="">
                             @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <!-- col-end -->
+                    <div class="col-sm-12">
+                        <div class="form-group mb-3">
+                            <label for="color" class="form-label">Color *</label>
+                            <input type="text" class="form-control @error('color') is-invalid @enderror" name="color" value="{{ $edit_data->color ?? old('color') }}" id="color" required="">
+                            @error('color')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

@@ -278,12 +278,12 @@
                                                         </div>
                                                         <div class="d-flex single_product col-sm-12">
                                                             <input type="submit" class="btn px-4 add_cart_btn"
-                                                                onclick="return sendSuccess();" id="add_to_cart"
+                                                                 id="add_to_cart"
                                                                 name="add_cart" value="কার্টে যোগ করুন " />
 
                                                             <input type="submit"
                                                                 class="btn px-4 order_now_btn order_now_btn_m"
-                                                                onclick="return sendSuccess();" id="order_now"
+                                                                 id="order_now"
                                                                 name="order_now" value="অর্ডার করুন" />
                                                         </div>
                                                     </div>
@@ -707,14 +707,14 @@
             if (document.forms["formName"]["product_size"]) {
                 size = document.forms["formName"]["product_size"].value;
                 if (size != "") {} else {
-                    toastr.warning("Please select any size");
+                    // toastr.warning("Please select any size");
                     return false;
                 }
             }
             if (document.forms["formName"]["product_color"]) {
                 color = document.forms["formName"]["product_color"].value;
                 if (color != "") {} else {
-                    toastr.error("Please select any color");
+                    // toastr.error("Please select any color");
                     return false;
                 }
             }
@@ -774,7 +774,7 @@
                             $('.add_cart_btn').prop('disabled', false);
                             $('.order_now_btn').prop('disabled', false);
                         } else {
-                            toastr.error('Stock Out', "Please select another color or size");
+                            // toastr.error('Stock Out', "Please select another color or size");
                             $(".stock").empty();
                             // cart button disabled
                             $('.add_cart_btn').prop('disabled', true);

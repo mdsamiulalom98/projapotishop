@@ -5,8 +5,14 @@ use shurjopayv2\ShurjopayLaravelPackage8\Http\Controllers\ShurjopayController;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Intervention\Image\Facades\Image;
+use Brian2694\Toastr\Facades\Toastr;
 use App\Models\ShippingCharge;
 use App\Models\PaymentGateway;
 use App\Models\SellerWithdraw;
@@ -22,17 +28,9 @@ use App\Models\Payment;
 use App\Models\Review;
 use App\Models\Order;
 use Carbon\Carbon;
-use Session;
-use Hash;
-use Auth;
-use Cart;
-use Mail;
-use Str;
-use DB;
 
 class CustomerController extends Controller
 {
-
     function __construct()
     {
         $this->middleware('customer', ['except' => ['register', 'customer_coupon', 'coupon_remove', 'store', 'verify', 'resendotp', 'account_verify', 'login', 'signin', 'pending', 'logout', 'checkout', 'forgot_password', 'forgot_verify', 'forgot_reset', 'forgot_store', 'forgot_resend', 'order_save', 'order_otp', 'order_success', 'order_track', 'order_track_result', 'customer_commision']]);
@@ -598,7 +596,7 @@ class CustomerController extends Controller
 
         Toastr::success('Thanks, Your order place successfully', 'Success!');
         $site_setting = GeneralSetting::where('status', 1)->first();
-        $sms_gateway = SmsGateway::where(['status' => 1, 'order' => '1'])->first();
+        $sms_gateway = SmsGateway::where(['status' => 1])->first();
         if ($sms_gateway) {
             $url = "$sms_gateway->url";
             $data = [

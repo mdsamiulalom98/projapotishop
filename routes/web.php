@@ -336,6 +336,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'lock', 'check_re
     Route::post('products/active', [ProductController::class, 'active'])->name('products.active');
     Route::post('products/destroy', [ProductController::class, 'destroy'])->name('products.destroy');
     Route::get('products/image/destroy', [ProductController::class, 'imgdestroy'])->name('products.image.destroy');
+    Route::get('products/variable-image/destroy', [ProductController::class, 'variable_imgdestroy'])->name('products.variableimage.destroy');
     Route::get('products/price/destroy', [ProductController::class, 'pricedestroy'])->name('products.price.destroy');
     Route::get('products/update-deals', [ProductController::class, 'update_deals'])->name('products.update_deals');
     Route::get('products/update-feature', [ProductController::class, 'update_feature'])->name('products.update_feature');

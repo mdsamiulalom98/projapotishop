@@ -22,7 +22,8 @@
                             @csrf
                             <div class="card">
                                 <div class="card-header">
-                                    <h6 class="potro-sans">আপনার অর্ডারটি কনফার্ম করতে তথ্যগুলো পূরণ করে <span style="color:#fe5200;">"অর্ডার
+                                    <h6 class="potro-sans">আপনার অর্ডারটি কনফার্ম করতে তথ্যগুলো পূরণ করে <span
+                                            style="color:#fe5200;">"অর্ডার
                                             করুন"</span> বাটন এ ক্লিক করুন অথবা ফোনে অর্ডার করতে এই নাম্বার <a
                                             href="tel:{{ $contact->hotline }}">{{ $contact->hotline }}</a> এর উপরে ক্লিক
                                         করুন। </h6>
@@ -94,14 +95,16 @@
                                         <div class="col-sm-12">
                                             <div class="form-group mb-3">
                                                 <label for="area">ডেলিভারি এরিয়া নিবার্চন করুন *</label>
-                                                <select type="area" id="area"
-                                                    class="form-control form-select @error('area') is-invalid @enderror" name="area"
-                                                    required>
+                                                <div class="shipping-area-box">
                                                     @foreach ($shippingcharge as $key => $value)
-                                                        <option value="{{ $value->id }}">{{ $value->name }}
-                                                        </option>
+                                                        <div class="area-item" data-id="{{ $value->id }}">
+                                                            <input name="area" id="area-{{ $key + 1 }}"
+                                                                type="radio" value="{{ $value->id }}">
+                                                            <label
+                                                                for="area-{{ $key + 1 }}">{{ $value->name }}</label>
+                                                        </div>
                                                     @endforeach
-                                                </select>
+                                                </div>
                                                 @error('area')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -143,8 +146,9 @@
 
                                                 @foreach ($paymentmethods as $key => $value)
                                                     <div class="form-check {{ $value->slug }}-label">
-                                                        <input class="form-check-input" type="radio" name="payment_method"
-                                                            id="{{ $value->slug }}" value="{{ $value->slug }}" required />
+                                                        <input class="form-check-input" type="radio"
+                                                            name="payment_method" id="{{ $value->slug }}"
+                                                            value="{{ $value->slug }}" required />
                                                         <label class="form-check-label" for="{{ $value->slug }}">
                                                             {{ $value->name }}
                                                         </label>
@@ -170,7 +174,8 @@
                                                 </div>
 
                                                 @foreach ($paymentmethods as $key => $value)
-                                                    <div class="{{ $value->slug }}-form payment-form" style="display: none;">
+                                                    <div class="{{ $value->slug }}-form payment-form"
+                                                        style="display: none;">
                                                         {!! $value->description !!}
                                                     </div>
                                                 @endforeach
@@ -204,7 +209,8 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     @if (Auth::guard('customer')->user() && Auth::guard('customer')->user()->seller_type == 1)
-                                                        <button class="order_place potro-sans" type="submit">অর্ডার করুন</button>
+                                                        <button class="order_place potro-sans" type="submit">অর্ডার
+                                                            করুন</button>
                                                     @else
                                                         <button class="order_place potro-sans" type="button"
                                                             id="initialSubmitButton">অর্ডার করুন</button>
@@ -296,9 +302,32 @@
             });
         });
     </script>
-    <script>
+    {{-- <script>
         $("#area").on("change", function() {
             var id = $(this).val();
+            $.ajax({
+                type: "GET",
+                data: {
+                    id: id
+                },
+                url: "{{ route('shipping.charge') }}",
+                dataType: "html",
+                success: function(response) {
+                    $(".cartlist").html(response);
+                },
+            });
+        });
+    </script> --}}
+    <script>
+        var firstItem = $(".area-item").first();
+        firstItem.addClass("active");
+        var firstRadioInput = firstItem.find("input[type='radio']").first();
+        firstRadioInput.prop("checked", true);
+
+        $(".area-item").on("click", function() {
+            var id = $(this).data("id");
+            $(".area-item").removeClass('active');
+            $(this).addClass('active');
             $.ajax({
                 type: "GET",
                 data: {

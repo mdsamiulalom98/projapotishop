@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="container-fluid">
-    
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -20,8 +20,8 @@
                 <h4 class="page-title">Order Status Manage</h4>
             </div>
         </div>
-    </div>       
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
    <div class="row">
     <div class="col-12">
         <div class="card">
@@ -31,35 +31,37 @@
                         <tr>
                             <th>SL</th>
                             <th>Name</th>
+                            <th>Color</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                
-                
+
+
                     <tbody>
                         @foreach($data as $key=>$value)
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$value->name}}</td>
+                            <td><span class="badge bg-{{$value->color}}">Color</span></td>
                             <td>@if($value->status==1)<span class="badge bg-soft-success text-success">Active</span> @else <span class="badge bg-soft-danger text-danger">Inactive</span> @endif</td>
                             <td>
                                 <div class="button-list">
                                     @if($value->status == 1)
-                                    <form method="post" action="{{route('orderstatus.inactive')}}" class="d-inline"> 
+                                    <form method="post" action="{{route('orderstatus.inactive')}}" class="d-inline">
                                     @csrf
-                                    <input type="hidden" value="{{$value->id}}" name="hidden_id">       
+                                    <input type="hidden" value="{{$value->id}}" name="hidden_id">
                                     <button type="button" class="btn btn-xs  btn-secondary waves-effect waves-light change-confirm"><i class="fe-thumbs-down"></i></button></form>
                                     @else
                                     <form method="post" action="{{route('orderstatus.active')}}" class="d-inline">
                                         @csrf
-                                    <input type="hidden" value="{{$value->id}}" name="hidden_id">        
+                                    <input type="hidden" value="{{$value->id}}" name="hidden_id">
                                     <button type="button" class="btn btn-xs  btn-success waves-effect waves-light change-confirm"><i class="fe-thumbs-up"></i></button></form>
                                     @endif
 
                                     <a href="{{route('orderstatus.edit',$value->id)}}" class="btn btn-xs btn-primary waves-effect waves-light"><i class="fe-edit-1"></i></a>
 
-                                    <form method="post" action="{{route('orderstatus.destroy')}}" class="d-inline">        
+                                    <form method="post" action="{{route('orderstatus.destroy')}}" class="d-inline">
                                         @csrf
                                     <input type="hidden" value="{{$value->id}}" name="hidden_id">
                                     <button type="submit" class="btn btn-xs btn-danger waves-effect waves-light delete-confirm"><i class="mdi mdi-close"></i></button></form>
@@ -69,7 +71,7 @@
                         @endforeach
                     </tbody>
                 </table>
- 
+
             </div> <!-- end card body-->
         </div> <!-- end card -->
     </div><!-- end col-->

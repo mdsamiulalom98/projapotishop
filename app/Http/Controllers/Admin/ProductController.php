@@ -37,8 +37,8 @@ class ProductController extends Controller
         ->pluck('childcategoryName', 'id');
         return response()->json($childcategory);
     }
-    
-    
+
+
     function __construct()
     {
          $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
@@ -46,8 +46,8 @@ class ProductController extends Controller
          $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:product-delete', ['only' => ['destroy']]);
     }
-    
-    
+
+
     public function index(Request $request)
     {
         if($request->keyword){
@@ -81,14 +81,14 @@ class ProductController extends Controller
         $input['topsale'] = $request->topsale?1:0;
         $input['free_shipping'] = $request->free_shipping?1:0;
         $input['product_code'] = 'P' . str_pad($last_id, 4, '0', STR_PAD_LEFT);
-        
+
         $meta_image = $request->file('meta_image');
         if($meta_image){
             $name1 =  time().'-'.$meta_image->getClientOriginalName();
             $name1 = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name1);
             $name1 = strtolower(preg_replace('/\s+/', '-', $name1));
             $uploadPath1 = 'public/uploads/product/';
-            $imageUrl1 = $uploadPath1.$name1; 
+            $imageUrl1 = $uploadPath1.$name1;
             $img1=Image::make($meta_image->getRealPath());
             $img1->encode('webp', 90);
             $width = 210;
@@ -97,17 +97,17 @@ class ProductController extends Controller
             $img1->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
-            $img1->save($imageUrl1); 
+            $img1->save($imageUrl1);
         }else{
             $imageUrl1 = NULL;
         }
-        
-        
-    
+
+
+
     $input['meta_image'] = $imageUrl1;
     $save_data = Product::create($input);
 
-   
+
 
         $pro_image = $request->file('image');
         if($pro_image){
@@ -124,13 +124,13 @@ class ProductController extends Controller
                 $pimage->save();
             }
         }
-        
+
        $new_prices = array_filter($request->new_prices);
         if (!empty($new_prices)) {
             $save_data->new_price = $new_prices[0];
             $save_data->save();
         }
-        
+
         if($request->stocks){
             $size      = $request->sizes;
             $color      = $request->colors;
@@ -142,7 +142,7 @@ class ProductController extends Controller
             if(is_array($stocks)){
                 foreach($stocks as $key=>$stock)
                 {
-                    
+
                         if(!empty($images[$key])){
                             $image = $images[$key];
                             $name =  time().'-'.$image->getClientOriginalName();
@@ -162,8 +162,8 @@ class ProductController extends Controller
                         $variable->new_price        = $new_price[$key];
                         $variable->stock            = $stock;
                         $variable->image            = $imageUrl;
-                        $variable->save(); 
-                    
+                        $variable->save();
+
                 }
             }
         }
@@ -171,7 +171,7 @@ class ProductController extends Controller
         Toastr::success('Success','Data insert successfully');
         return redirect()->route('products.index');
     }
-    
+
     public function edit($id)
     {
         $edit_data = Product::with('images')->find($id);
@@ -192,7 +192,7 @@ class ProductController extends Controller
         $products = DB::table('products')->select('id','name','status','old_price','new_price','stock')->where('status',1)->get();;
         return view('backEnd.product.price_edit',compact('products'));
     }
-    
+
     public function update(Request $request)
     {
         // return $request->all();
@@ -213,12 +213,12 @@ class ProductController extends Controller
         //meta image
         $meta_image = $request->file('meta_image');
         if($meta_image){
-            // image with intervention 
+            // image with intervention
             $name1 =  time().'-'.$meta_image->getClientOriginalName();
             $name1 = preg_replace('"\.(jpg|jpeg|png|webp)$"', '.webp',$name1);
             $name1 = strtolower(preg_replace('/\s+/', '-', $name1));
             $uploadpath1 = 'public/uploads/category/';
-            $imageUrl1 = $uploadpath1.$name1; 
+            $imageUrl1 = $uploadpath1.$name1;
             $img=Image::make($meta_image->getRealPath());
             $img->encode('webp', 90);
             $width = "";
@@ -230,12 +230,12 @@ class ProductController extends Controller
             $img->save($imageUrl1);
             $input['meta_image'] = $imageUrl1;
             File::delete($update_data->meta_image);
-            
+
         }else{
             $input['meta_image'] = $update_data->meta_image;
         }
         $update_data->update($input);
-        
+
        if($update_data->type == 0){
            $new_prices = array_filter($request->up_new_prices);
             if (!empty($new_prices)) {
@@ -243,8 +243,8 @@ class ProductController extends Controller
                 $update_data->save();
             }
         }
-        
-        // image dynamic 
+
+        // image dynamic
         $images = $request->file('image');
         if($images){
             foreach ($images as $key => $image) {
@@ -287,7 +287,7 @@ class ProductController extends Controller
                            $imageUrl = $upvariable->image;
                         }
 
-                        
+
                         $upvariable->product_id       = $update_data->id;
                         $upvariable->size             = $up_size?$up_size[$key]:NULL;
                         $upvariable->color            = $up_color?$up_color[$key]:NULL;
@@ -298,7 +298,7 @@ class ProductController extends Controller
                         $upvariable->image            = $imageUrl;
                         $upvariable->save();
                     }
-                } 
+                }
             }
 
 
@@ -313,7 +313,7 @@ class ProductController extends Controller
             if(is_array($stocks)){
                 foreach($stocks as $key=>$stock)
                 {
-                    
+
                         if(!empty($images[$key])){
                             $image = $images[$key];
                             $name =  time().'-'.$image->getClientOriginalName();
@@ -334,16 +334,16 @@ class ProductController extends Controller
                         $variable->new_price        = $new_price[$key];
                         $variable->stock            = $stock;
                         $variable->image            = $imageUrl;
-                        $variable->save(); 
-                    
+                        $variable->save();
+
                 }
             }
         }
-        
+
         Toastr::success('Success','Data update successfully');
         return redirect()->route('products.index');
     }
- 
+
     public function inactive(Request $request)
     {
         $inactive = Product::find($request->hidden_id);
@@ -376,15 +376,24 @@ class ProductController extends Controller
         return redirect()->back();
     }
     public function imgdestroy(Request $request)
-    { 
+    {
         $delete_data = Productimage::find($request->id);
         File::delete($delete_data->image);
         $delete_data->delete();
         Toastr::success('Success','Data delete successfully');
         return redirect()->back();
-    } 
+    }
+    public function variable_imgdestroy(Request $request)
+    {
+        $delete_data = ProductVariable::find($request->id);
+        File::delete($delete_data->image);
+        $delete_data->image = '';
+        $delete_data->save();
+        Toastr::success('Success','Data delete successfully');
+        return redirect()->back();
+    }
     public function pricedestroy(Request $request)
-    { 
+    {
         $delete_data = ProductVariable::find($request->id);
         File::delete($delete_data->image);
         $delete_data->delete();

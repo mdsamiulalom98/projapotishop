@@ -10,7 +10,8 @@ class OrderStatus extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function orders(){
-        return $this->hasMany(Order::class, 'order_status')->select('id','order_status');
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'order_status')->select('id', 'order_status');
     }
 }
